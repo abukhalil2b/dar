@@ -1,0 +1,223 @@
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("../fonts/HelveticaNeueLTW20-Light.woff") format("woff"),
+    url("../fonts/HelveticaNeueLTW20-Light.svg") format("svg"),
+    url("../fonts/HelveticaNeueLTW20-Light.eot") format("embedded-opentype");
+}
+@font-face {
+  font-family: "KFC Naskh";
+  src: url("../fonts/KFC_naskh.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Helvetica Neue";
+  font-weight: 700;
+  src: url("../fonts/HelveticaNeueLTW20-Bold.woff") format("woff"),
+    url("../fonts/HelveticaNeueLTW20-Bold.svg") format("svg"),
+    url("../fonts/HelveticaNeueLTW20-Bold.eot") format("embedded-opentype");
+}
+
+
+/*  reset */
+input[type="checkbox"]{
+  width: 25px;
+  height: 25px;
+}
+a:hover {
+  text-decoration: none;
+}
+
+select,input{
+  padding: 0 3px !important;
+}
+body{
+   font-family: "Helvetica Neue";
+  text-align: right !important;
+}
+
+
+/* Global */
+.float-left{
+  float: left;
+}
+
+/* header logo */
+.header-logo-table-container {
+  text-align: center;
+}
+
+
+/* navbar */
+.nav {
+  border-bottom: 1px solid #cfd4d2;
+  padding: 5px;
+}
+
+.nav-dn{
+  height:100px;
+  background-color: #418c8c;
+  color: #f0fffc;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+/* btn */
+.btn-logout{
+    background-color: transparent;
+    color: #8f0202;
+    text-align: center;
+    border-radius: 5px;
+    height: 30px;
+    width: 60px;
+    font-size: 14px;
+    line-height: 1.5;
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    border:1px solid #8f0202;
+}
+
+.btn-logout:hover{
+    background-color: #e44c5a;
+    color: #f0fffc;
+}
+
+.btn-student-add{
+  margin-top: 23px;
+}
+.btn-light-green {
+  border-color: #418c8c;
+  background-color: #f0fffc;
+  color: #495057;
+  width: 150px;
+}
+.btn-margin{
+  margin-top: 24px;
+}
+
+.btn-100{
+ width: 100%;
+}
+
+.btn-main-menu-container{
+  text-align: center;
+}
+
+.input-300{
+  width: 300px;
+}
+/*  login */
+.body-login-input-container {
+  position: relative;
+}
+
+.body-login-passowrd-input-show-txt {
+  font-size: 12px;
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+}
+
+.body-login-passowrd-input-show-txt:hover {
+  cursor: pointer;
+  color: #418c8c;
+}
+
+.body-login-input:focus {
+  color: #495057;
+  background-color: #f0fffc;
+  border-color: #418c8c;
+  outline: 0;
+  box-shadow: none;
+}
+
+.login-card {
+  min-width: 300px !important;
+  min-height: 100px !important;
+  box-shadow: 0 0 1px 1px #ebebeb !important;
+  margin: 0 0 35px 0;
+}
+
+.login-card-footer {
+  background-color: #ffffff !important;
+  text-align: center;
+}
+
+
+
+.btn-light-green:hover {
+  background-color: #418c8c;
+  color: #f0fffc;
+}
+
+.btn-light-green:focus {
+  box-shadow: none;
+}
+
+/*  body  */
+.body {
+  width: 100%;
+  min-height: 50vh;
+  background-image: linear-gradient(#eff5f5, #ffffff);
+  margin-bottom: 2rem;
+}
+
+.body-title-lg {
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.body-title-sm {
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+/* file: student index*/
+.edit-link{
+  margin-right: 10px;
+}
+
+/*file: teacher index*/
+.teacher-edit-link{
+  margin-right: 10px;
+}
+
+@media (max-width: 500px) {
+  .body-title-lg{
+    font-size: 15px;
+  }
+  .nav-dn{
+    font-size: 15px;
+    font-weight: normal;
+  }
+  .btn-light-green{
+    width: 100%;
+    margin:2px;
+  }
+  table{
+    font-size: 12px;
+  }
+  .edit-link{
+    float: none;
+    display: block;
+    font-size: 12px;
+  }
+  .form-control{
+    margin:2px;
+  }
+  .input-300{
+    width: 100%;
+  }
+
+  .float-left{
+    float: none;
+  }
+}
+
+
+

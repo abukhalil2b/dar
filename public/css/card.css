@@ -1,0 +1,18 @@
+.card{
+	margin-top:15px;
+	height: 255px;
+}
+.card-active{
+	border:1px solid #418c8c;
+}
+
+.card-body-img-container{
+	text-align: center;
+}
+.card-footer-active{
+	background-color: #418c8c;
+	text-align: center;
+	color: #fff;
+	font-size: 20px;
+	font-weight: bold;
+}
