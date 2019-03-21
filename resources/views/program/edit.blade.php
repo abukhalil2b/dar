@@ -24,8 +24,7 @@
                     <b class="text-success">{{session('status')}}</b>  
                     <input type="hidden" name="program_id" value="{{$program->id}}">  
                     <button class="btn btn-light-green btn-100" type="submit">حفظ</button>
-                    <hr>
-                    <a  href="{{route('welcome')}}" class="btn btn-light-green btn-100" >القائمة</a>
+                    
                 </div>
             </form>
         </div>

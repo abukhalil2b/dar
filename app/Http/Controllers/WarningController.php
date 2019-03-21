@@ -27,7 +27,7 @@ class WarningController extends Controller
     public function warningAdminCommentStore(Request $request){
         // return $request->all();
         Warning::where('id',$request->warning_id)->update(['comment'=>$request->comment]);
-        return redirect()->back()->with(['status'=>'تم']);
+        return redirect()->route('admin.warning.student.index');
     }
 
 

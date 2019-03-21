@@ -33,6 +33,10 @@
 
         <div class="row">
             <div class="col-lg-12">
+                <h4>البرامج الأخرى</h4>
+                @if(App\Program::orderBy('id','desc')->first()!=null)
+                [{{App\Program::orderBy('id','desc')->first()->name}}]
+                @endif
                     <table class="table table-bordered">
                        
                         @foreach($students as $student)
@@ -45,7 +49,7 @@
                             </td>
                             <td>
 
-                                <a href="{{route('teacher.show.student',['student_id'=>$student->id])}}">
+                                <a href="{{route('teacher.show.student.other',['student_id'=>$student->id])}}">
                                    <img src="{{asset('img/search.png')}}" width="40"> 
                                 </a>
                                  الحضور
@@ -56,18 +60,8 @@
                                  @endforeach
                                  
                             </td>
-                            <td>
-                                <a href="{{route('student.report.create',['student_id'=>$student->id])}}">
-                                   <img src="{{asset('img/note.png')}}" width="40">  
-                                </a>
-                                الحفظ
-                            </td>
-                            <td>
-                                <a href="">
-                                   <img src="{{asset('img/awards.png')}}" width="30">  
-                                </a>
-                                عدد الأجزاء المحفوظة
-                            </td>
+                            
+                            
                             <td>
                                 <a href="{{route('student.warning.create',['student_id'=>$student->id])}}">
                                    <img src="{{asset('img/mon.png')}}" width="40">  

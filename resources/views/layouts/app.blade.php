@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>dar alquran </title>
+    <title>  </title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -46,6 +46,7 @@
                     <span >البرنامج:</span>
                     @if(App\Program::orderBy('id','desc')->first()!=null)
                     [{{App\Program::orderBy('id','desc')->first()->name}}]
+                    [{{App\Program::orderBy('id','desc')->first()->created_at}}]
                     @endif
                 
                 </div>

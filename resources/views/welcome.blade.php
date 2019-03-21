@@ -70,7 +70,7 @@
                   الملحوظات الصادرة  من المدرسين في حق الطلبة
                   </p>
               </div>
-              <a href="{{route('admin.warning.student.index')}}">
+              <a href="{{route('admin.warning.student.index',['program_id'=>App\Program::orderBy('id','desc')->value('id')])}}">
                   <div class="card-footer card-footer-active">
                       <p>
                      ملحوظات الطلبة
@@ -81,23 +81,7 @@
         </div>
 
 
-        <div class="col-lg-3">
-          <div class="card card-active">
-              <div class="card-body card-body-img-container">
-                  <img class="card-body-img" src="{{ asset('img/mon.png') }}" width=40>
-                  <p>
-الملحوظات الصادرة  من الطلبة او المشرفين في حق المدرسين
-                  </p>
-              </div>
-              <a href="{{route('admin.warning.teacher.index')}}">
-                  <div class="card-footer card-footer-active">
-                      <p>
-                     ملحوظات المدرسين
-                      </p>
-                  </div>  
-              </a>
-          </div>
-        </div>
+
 
         <div class="col-lg-3">
           <div class="card card-active">
@@ -120,24 +104,55 @@
       @endif
     @endif
 
+      @if($program_tag=='anwar')
+  
         <div class="col-lg-3">
-          <div class="card card-active">
+          <div class="card card-active-teacher">
               <div class="card-body card-body-img-container">
                   <img class="card-body-img" src="{{ asset('img/time.png') }}" width=40>
                   <p>
-                  سجيل الغياب ومتابعة الحفظ وتدوين الملاحظات
+                  سجل الغياب ومتابعة الحفظ وتدوين الملاحظات
                   </p>
               </div>
               <a href="{{route('teacher.studentlist')}}">
-                  <div class="card-footer card-footer-active">
+                  <div class="card-footer card-footer-active-teacher">
                       <p>
-                      الحضور  
+                      أنوار القرآن 
                       </p>
                   </div>  
               </a>
           </div>
         </div>
-        
+
+        @endif
+
+
+ @if($program_tag!='anwar')
+
+        <div class="col-lg-3">
+          <div class="card card-active-teacher">
+              <div class="card-body card-body-img-container">
+                  <img class="card-body-img" src="{{ asset('img/time.png') }}" width=40>
+                  <p>
+                  سجل الحضور
+                  </p>
+              </div>
+              <a href="{{route('teacher.studentlist.other')}}">
+                  <div class="card-footer card-footer-active-teacher">
+                      <p>
+                      
+                      @if(App\Program::orderBy('id','desc')->first()!=null)
+                      [{{App\Program::orderBy('id','desc')->first()->name}}]
+                      @endif
+                      </p>
+                  </div>  
+              </a>
+          </div>
+        </div>
+@endif
+
+
+
     </div>
 
 

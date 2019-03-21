@@ -13,13 +13,14 @@ class AdminController extends Controller
         $this->middleware('auth');
     } 
 
-    public function studentWarningIndex(){
-    	$program = Program::orderBy('id','desc')->first();
-        if($program!=null){
-            $warnings = Warning::where('program_id',$program->id)
+    public function studentWarningIndex($program_id){
+    	
+        if($program_id!=null){
+            $warnings = Warning::where('program_id',$program_id)
             ->where('against','student')
             ->get();
-            return view('admin.student.warning.index',compact('warnings'));            
+            $programs = Program::all();
+            return view('admin.student.warning.index',compact('warnings','programs'));            
         }
 
     }

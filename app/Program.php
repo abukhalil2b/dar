@@ -8,7 +8,8 @@ class Program extends Model
 {
 
     protected $fillable = [
-        'name'
+        'name',
+        'program_tag'
     ];
 
 

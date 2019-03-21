@@ -28,8 +28,10 @@ class ProgramController extends Controller
 
     public function programStore(Request $request)
     {
+        
         $this->validate($request,[
-            'name'        =>'required'
+            'name'        =>'required',
+            'program_tag' =>'required'
         ]);
 
         if(Program::create($request->all())){

@@ -33,11 +33,7 @@ class UserloginController extends Controller
        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password]))
        {
 
-            if(Auth::user()->user_type=='teacher'){
-                return redirect()->route('teacher.studentlist');
-            }else{
-                return redirect()->route('welcome'); 
-            }
+        return redirect()->route('welcome'); 
        	     
        }else{
             return redirect()->route('user.login')->with(['status'=>'تم']);

@@ -5,9 +5,7 @@
 <section class="body">
     <div class="container">
         <div class="row pt-3">
-            <div class="col-lg-12">
-                <a  href="{{route('welcome')}}" class="btn btn-light-green btn-block" >القائمة</a>
-            </div>
+            
         </div>
         <div class="row pt-3">
             <div class="col-lg-12">
@@ -24,7 +22,7 @@
                   </div>
                   <div class="group-control pt-3">
                     <input type="hidden" name="warning_id" value="{{$todyWarning->id}}">
-                      <button class="btn btn-light-green btn-100" type="submit">حفظ</button>
+                      <button class="btn btn-light-green btn-100" type="submit">حفظ التعديل</button>
                   </div>
               </form>
             </div>

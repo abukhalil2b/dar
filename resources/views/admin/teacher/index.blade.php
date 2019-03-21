@@ -197,9 +197,10 @@
         <div class="row pt-3">
             <div class="col-lg-12">
 
-                <table class="table">
+                <table class="table table-bordered">
                     <tr>
                         <td> الاسم </td>
+                        <td> الإيميل </td>
                         <td>المستوى</td>
                         <td>عدد الطلاب</td>
                     </tr>
@@ -207,6 +208,11 @@
                     <tr>
                         <td>
                             {{$teacher->first_name}} {{$teacher->second_name}} {{$teacher->third_name}}
+                            <a class="teacher-edit-link" 
+                             href="{{route('admin.teacher.edit',['user_id'=>$teacher->id])}}">تعديل </a>
+                        </td>
+                         <td>
+                            {{$teacher->email}} 
                             <a class="teacher-edit-link" 
                              href="{{route('admin.teacher.edit',['user_id'=>$teacher->id])}}">تعديل </a>
                         </td>

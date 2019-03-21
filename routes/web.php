@@ -95,7 +95,7 @@ Route::prefix('admin/student')->group(function(){
 /*admin student reports*/
 /*admin student warnings*/
 Route::prefix('admin/warning')->group(function(){
-    Route::get('student/index', 'AdminController@studentWarningIndex')
+    Route::get('{program_id}/student/index', 'AdminController@studentWarningIndex')
     ->name('admin.warning.student.index');
 
     Route::get('teacher/index', 'AdminController@teacherWarningIndex')
@@ -142,12 +142,21 @@ Route::prefix('teacher')->group(function(){
 
     Route::get('/studentlist', 'TeacherController@studentList')
     ->name('teacher.studentlist');
+    Route::get('/studentlist/other', 'TeacherController@studentListOther')
+    ->name('teacher.studentlist.other');
+    
 
     Route::get('/show/{student_id}/student', 'TeacherController@showStudent')
     ->name('teacher.show.student');
 
+    Route::get('/show/{student_id}/student/other', 'TeacherController@showStudentOther')
+    ->name('teacher.show.student.other');
+
     Route::post('/writedownnotes/store', 'TeacherController@writeDownNoteStore')
     ->name('teacher.writedownnotes.store');
+
+    Route::post('/writedownnotes/store/other', 'TeacherController@writeDownNoteStoreOther')
+    ->name('teacher.writedownnotes.store.other');
 
     Route::post('/writedownnotes/update', 'TeacherController@writeDownNoteUpdate')
     ->name('teacher.writedownnotes.update');
@@ -171,7 +180,8 @@ Route::prefix('teacher')->group(function(){
 
 
 Route::get('/',function(){
-    return view('welcome');
+    $program_tag = App\Program::orderBy('id','desc')->value('program_tag');
+    return view('welcome',compact('program_tag'));
 })->name('welcome')->middleware('auth');
 
 Route::get('/home',function(){

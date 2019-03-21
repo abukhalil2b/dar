@@ -30,7 +30,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <form action="{{route('teacher.writedownnotes.store')}}" method="post">
+                <form action="{{route('teacher.writedownnotes.store.other')}}" method="post">
                     @csrf
                     <table class="table">
                         <tr>
@@ -43,16 +43,7 @@
                                 <input type="time" name="present_time">
                             </td>
                         </tr>
-                        <tr>
-                            <td> القلم القارئ </td>
-                            <td>
-                                <input type="checkbox" checked="checked" value="1" name="pen_reader">    
-                            </td>
-                            <td> الدفتر </td>
-                            <td>
-                                <input type="checkbox" checked="checked" value="1" name="notebook">    
-                            </td>
-                        </tr>
+                        
                         <tr>
                             <td> الدشداشة البيضاء </td>
                             <td>
@@ -79,7 +70,7 @@
                                 <input type="hidden" value="{{$student->id}}" name="student_id">
                                 <input type="hidden" value="{{$lastProgram->id}}" name="program_id">
                                 <input type="hidden" value="anwar" name="program_tag">
-                                <button type="submit" class="btn btn-light-green"> حفظ   </button>
+                                <button type="submit" class="btn btn-light-green"> تسجيل الحضور   </button>
                                 <a  class="btn btn-light-green float-left" href="{{route('teacher.studentlist')}}">الطلاب</a>
                             </td>
                         </tr>

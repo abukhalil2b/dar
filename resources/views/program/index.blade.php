@@ -19,6 +19,14 @@
                 <div class="form-group">
                     <input name="name" type="text" class="form-control" >
                 </div>
+                <div class="form-group" >
+                    <select name="program_tag" class="form-control">
+                        <option value="">حدد تصنيف البرنامج...</option>
+                        <option value="anwar">انوار القرآن</option>
+                        <option value="sunday_hero">ابطال الاحد</option>
+                        <option value="fiqh">المدرسة الفقهية</option>
+                    </select>
+                </div>
             </div>
             <div class="col-lg-12">
                 <div class="form-group">
@@ -40,6 +48,7 @@
                @foreach($programs as $program)
                 <div class="alert alert-success">
                     <center><b>{{$program->name}}</b></center>
+                    
                     <a class="edit-link" href="{{route('program.edit',['program_id'=>$program->id])}}"> تعديل  </a>
                 </div>
                @endforeach

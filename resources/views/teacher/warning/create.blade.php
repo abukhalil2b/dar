@@ -5,9 +5,7 @@
 <section class="body">
     <div class="container">
         <div class="row pt-3">
-            <div class="col-lg-12">
-                <a  href="{{route('welcome')}}" class="btn btn-light-green btn-block" >القائمة</a>
-            </div>
+            
         </div>
         <div class="row pt-3">
             <div class="col-lg-12">

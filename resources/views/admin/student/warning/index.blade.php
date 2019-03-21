@@ -7,6 +7,24 @@
         
         <div class="row pt-3">
             <div class="col-lg-12">
+                <form action="">
+                <table class="table">
+                    <tr>
+                        <td>
+                           <select name="" id="programid" class="form-control">
+                                <option value="">اختر برنامج معين...</option>}
+                                @foreach($programs as $program)
+                                    <option value="{{$program->id}}">{{$program->id}} - {{$program->name}}</option>
+                                @endforeach
+                            </select>             
+                        </td>
+                        <td>
+                            <button class="btn" type="submit"> بحث </button>
+                        </td>
+                    </tr>
+                </table>
+                </form>
+                
                 <table class="table table-bordered">
                     <tr>
                         <td>اسم الطالب</td>
@@ -39,5 +57,7 @@
 
     </div><!--/container-->
 
+
 @endsection
+
 
