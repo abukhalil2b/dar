@@ -45,7 +45,7 @@
                             <div class="col-lg-2">
                                 <div class="form-group ">
                                    الجنسية
-                                    <input name="nationalty"  class="form-control body-login-input"
+                                    <input name="nationality"  class="form-control body-login-input"
                                      >
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                             <div class="col-lg-2">
                                 <div class="form-group ">
                                    الرقم المدني للعمانين
-                                    <input name="national_id"  class="form-control body-login-input"
+                                    <input name="nationality_id" type="number" class="form-control body-login-input"
                                      >
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                             <div class="col-lg-2">
                                 <div class="form-group ">
                                    الجواز لغير العمانيين
-                                    <input name="passport_id"  class="form-control body-login-input"
+                                    <input name="passport_id" type="number"  class="form-control body-login-input"
                                      >
                                 </div>
                             </div>
@@ -74,6 +74,14 @@
                                         <option value="{{$state->id}}"> {{$state->name}} </option>
                                         @endforeach
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <div class="form-group ">
+                                    البلدة
+                                    <input name="village"  class="form-control body-login-input"
+                                     >
                                 </div>
                             </div>
 
@@ -131,10 +139,11 @@
                             <div class="col-lg-2">
                                 <div class="form-group ">
                                     كلمة المرور
-                                    <input name="password"  type="password"  
+                                    <input name="password"  type="text"  
                                     class="form-control body-login-input" >
                                 </div>
                             </div>
+                            
                             <div class="col-lg-3">
                                 <div class="form-group ">
                                    الهاتف
@@ -142,19 +151,15 @@
                                     class="form-control body-login-input" >
                                 </div>
                             </div>
+                            
                             <div class="col-lg-3">
                                 <div class="form-group ">
-                                   المذهب
-                                    <input name="mobile"  type="number"  
-                                    class="form-control body-login-input" >
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group ">
-                                نوع المدرس
-                                   <select name="teacher_id" class="form-control">
-                                        <option value="valuntir">vl</option>
-                                        <option value="per">per</option>
+                                راتب المدرس
+                                   <select name="teacher_type" class="form-control">
+                                        <option value="school_paid">مكافأة من المدرسة</option>
+                                        <option value="minister_paid">مكافأة من الوزارة</option>
+                                        <option value="officially">رسمي من الوزارة</option>
+                                        <option value="volunteer">متطوع</option>
                                     </select>
                                 </div>
                             </div>
@@ -168,16 +173,13 @@
                                     </select>
                                 </div>
                             </div>
-                            
-
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <div class="form-group ">
-                                   الوثائق
-                                    <input name="file"  type="file"  
+                                   الملاحظة
+                                    <input name="note"
                                     class="form-control body-login-input" >
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="form-group ">
                                     <input type="hidden" value="teacher" name="user_type">
@@ -200,29 +202,16 @@
                 <table class="table table-bordered">
                     <tr>
                         <td> الاسم </td>
-                        <td> الإيميل </td>
-                        <td>المستوى</td>
-                        <td>عدد الطلاب</td>
                     </tr>
                     @foreach($teachers as $teacher)
                     <tr>
                         <td>
-                            {{$teacher->first_name}} {{$teacher->second_name}} {{$teacher->third_name}}
-                            <a class="teacher-edit-link" 
-                             href="{{route('admin.teacher.edit',['user_id'=>$teacher->id])}}">تعديل </a>
-                        </td>
-                         <td>
-                            {{$teacher->email}} 
-                            <a class="teacher-edit-link" 
-                             href="{{route('admin.teacher.edit',['user_id'=>$teacher->id])}}">تعديل </a>
-                        </td>
-                        <td>
-                            @if($teacher->level!=null){{$teacher->level->name}}@endif
-                            <a class="teacher-edit-link" 
-                             href="{{route('admin.teacher.shift.create',['user_id'=>$teacher->id])}}">نقل </a>
-                        </td>
-                        <td>
-                             @if($teacher->level!=null){{$teacher->level->students->count()}}@endif
+<a class="teacher-edit-link" href="{{route('admin.teacher.details',['user_id'=>$teacher->id])}}">
+                            {{$teacher->first_name}}
+                            {{$teacher->second_name}}
+                            {{$teacher->third_name}}
+                            {{$teacher->last_name}}
+                             </a>
                         </td>
                     </tr>
                     @endforeach   

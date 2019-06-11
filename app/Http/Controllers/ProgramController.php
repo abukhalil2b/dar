@@ -14,10 +14,12 @@ class ProgramController extends Controller
         $this->middleware('auth');
     }
 
-    public function programIndex()
+    public function programIndex($program_tag)
     {
-        $programs = Program::orderBy('id','desc')->get();
-        return view('program.index',compact('programs'));
+        
+        $programs = Program::orderBy('id','desc')->with('students')
+        ->where(['program_tag'=>$program_tag,'gender'=>'male'])->get();
+        return view('program.index',compact('programs','program_tag'));
     }
 
     public function programEdit($program_id)

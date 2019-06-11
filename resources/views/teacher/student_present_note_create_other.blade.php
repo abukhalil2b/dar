@@ -67,11 +67,16 @@
                         <tr>
                             <td colspan="4">
                                 <input type="hidden" value="{{Auth::user()->id}}" name="user_id">
+                                <input type="hidden" value="{{$student->gender}}" name="gender">
                                 <input type="hidden" value="{{$student->id}}" name="student_id">
                                 <input type="hidden" value="{{$lastProgram->id}}" name="program_id">
-                                <input type="hidden" value="anwar" name="program_tag">
+                                <input type="hidden" value="{{$lastProgram->program_tag}}" name="program_tag">
+                                <input type="hidden" value="{{date('Y',time())}}" name="year">
+                                <input type="hidden" value="{{date('m',time())}}" name="month">
+                                <input type="hidden" value="{{date('d',time())}}" name="day">
                                 <button type="submit" class="btn btn-light-green"> تسجيل الحضور   </button>
-                                <a  class="btn btn-light-green float-left" href="{{route('teacher.studentlist')}}">الطلاب</a>
+                                <a  class="btn btn-light-green float-left" 
+                                href="{{route('teacher.studentlist.other')}}">الطلاب</a>
                             </td>
                         </tr>
                     </table>

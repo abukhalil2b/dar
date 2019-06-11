@@ -37,7 +37,7 @@ Route::prefix('level')->group(function(){
 /*  program */
 Route::prefix('program')->group(function(){
 
-    Route::get('/index', 'ProgramController@programIndex')
+    Route::get('/{program_tag}/index', 'ProgramController@programIndex')
     ->name('program.index');
 
     Route::get('/{program_id}/edit', 'ProgramController@programEdit')
@@ -63,6 +63,15 @@ Route::prefix('admin/student')->group(function(){
     Route::get('/index', 'StudentController@studentIndex')
     ->name('admin.student.index');
     
+    Route::get('/present/today', 'StudentController@studentPresentToday')
+    ->name('admin.student.present.today');
+
+    Route::get('/present/month', 'StudentController@studentPresentMonth')
+    ->name('admin.student.present.month');
+
+    Route::get('/present/year', 'StudentController@studentPresentYear')
+    ->name('admin.student.present.year');
+
     Route::get('/{student_id}/edit', 'StudentController@studentEdit')
     ->name('admin.student.edit');
     
@@ -118,6 +127,9 @@ Route::prefix('admin/teacher')->group(function(){
 
     Route::get('/index', 'UserController@teacherIndex')
     ->name('admin.teacher.index');
+
+    Route::get('/{teacher_id}/details', 'UserController@teacherDetails')
+    ->name('admin.teacher.details');
     
     Route::get('/{teacher_id}/edit', 'UserController@teacherEdit')
     ->name('admin.teacher.edit');

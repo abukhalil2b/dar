@@ -29,6 +29,12 @@ class UserController extends Controller
         return view('admin.teacher.index',compact('teachers','levels','states'));
     }
 
+    public function teacherDetails($user_id)
+    {
+        $teacher = User::where(['user_type'=>'teacher','id'=>$user_id])->first();
+        return view('admin.teacher.details',compact('teacher'));
+    }
+
     public function teacherEdit($user_id)
     {
         $states = State::all();
@@ -46,21 +52,26 @@ class UserController extends Controller
             'password'     =>'required',
             'user_type'    =>'required',
             'level_id'     =>'required',
-            'state_id'     =>'required',
         ]);
 
         $data = [
+            'village'=>$request->village,
             'first_name'=>$request->first_name,
             'second_name'=>$request->second_name,
             'third_name'=>$request->third_name,
             'last_name'=>$request->last_name,
+            'nationality'=>$request->nationality,
+            'nationality_id'=>$request->nationality_id,
+            'passport_id'=>$request->passport_id,
             'gender'=>$request->gender,
             'mobile'=>$request->mobile,
             'level_id'=>$request->level_id,
             'state_id'=>$request->state_id,
             'user_type' => $request->user_type,
             'email' => $request->email,
+            'note' => $request->note,
             'password' => Hash::make($request->password),
+            'plain_password'=>$request->password
         ];
         if(User::create($data)){
             return redirect()->back()->with(['status'=>'تم']);
@@ -79,10 +90,11 @@ class UserController extends Controller
 
         if($request->has('password'))
         {
-            $data = ['password' => Hash::make($request->password)];
+            $data = ['password' => Hash::make($request->password),'plain_password'=>$request->password];
         }
 
         $data = [
+            'village'=>$request->village,
             'first_name'=>$request->first_name,
             'second_name'=>$request->second_name,
             'third_name'=>$request->third_name,

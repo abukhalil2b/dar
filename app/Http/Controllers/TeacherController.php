@@ -55,6 +55,7 @@ class TeacherController extends Controller
         
      $data= [
             'present_time'  =>$request->present_time,
+            'gender'        =>$request->gender,
             'pen_reader'    =>$request->pen_reader,
             'notebook'      =>$request->notebook,
             'white_dishdash'=>$request->white_dishdash,
@@ -64,7 +65,10 @@ class TeacherController extends Controller
             'user_id'       =>$request->user_id,
             'student_id'    =>$request->student_id,
             'program_id'    =>$request->program_id,
-            'program_tag'    =>$request->program_tag
+            'program_tag'   =>$request->program_tag,
+            'year'          =>$request->year,
+            'month'         =>$request->month,
+            'day'           =>$request->day
             ];
             
             if(DB::table('student_program')->insert($data)){
@@ -78,14 +82,22 @@ class TeacherController extends Controller
         
      $data= [
             'present_time'  =>$request->present_time,
+            'gender'        =>$request->gender,
+            'white_dishdash'=>$request->white_dishdash,
+            'white_mosar'   =>$request->white_mosar,
+            'not_mosbil'    =>$request->not_mosbil,
+            'other_note'    =>$request->other_note,
             'user_id'       =>$request->user_id,
             'student_id'    =>$request->student_id,
             'program_id'    =>$request->program_id,
-            'program_tag'   =>$request->program_tag
+            'program_tag'   =>$request->program_tag,
+            'year'          =>$request->year,
+            'month'         =>$request->month,
+            'day'           =>$request->day
             ];
             
             if(DB::table('student_program')->insert($data)){
-                return redirect()->route('teacher.studentlist')->with(['status'=>'تم']);
+                return redirect()->route('teacher.studentlist.other')->with(['status'=>'تم']);
             }
     }
 

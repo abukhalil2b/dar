@@ -28,10 +28,7 @@ class CreateStudentsTable extends Migration
             $table->string('grade')->nullable();
 
             $table->integer('level_id')->unsigned()->nullable();
-            $table->foreign('level_id')->references('id')->on('levels');
-            
             $table->integer('state_id')->unsigned()->nullable();
-            $table->foreign('state_id')->references('id')->on('states');
 
             $table->string('note')->nullable();
             $table->string('avatar')->nullable();

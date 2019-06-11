@@ -20,8 +20,8 @@
 
 /*  reset */
 input[type="checkbox"]{
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
 }
 a:hover {
   text-decoration: none;
@@ -34,6 +34,7 @@ body{
    font-family: "Helvetica Neue";
   text-align: right !important;
 }
+
 
 
 /* Global */
@@ -81,7 +82,6 @@ body{
   margin-top: 23px;
 }
 .btn-light-green {
-  margin-top: 15px !important;
   border-color: #418c8c;
   background-color: #f0fffc;
   color: #495057;
@@ -158,19 +158,6 @@ body{
   margin-bottom: 2rem;
 }
 
-.body-title-lg {
-  font-size: 25px;
-  text-align: center;
-  width: 100%;
-  display: block;
-}
-
-.body-title-sm {
-  font-size: 16px;
-  text-align: center;
-  width: 100%;
-  display: block;
-}
 
 /* file: student index*/
 .edit-link{
@@ -180,6 +167,14 @@ body{
 /*file: teacher index*/
 .teacher-edit-link{
   margin-right: 10px;
+}
+
+
+/*file: program index*/
+.program-name{
+  text-align: center;
+  font-weight: bold;
+  margin: 0 15px;
 }
 
 @media (max-width: 500px) {

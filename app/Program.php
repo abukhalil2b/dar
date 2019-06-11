@@ -8,8 +8,13 @@ class Program extends Model
 {
 
     protected $fillable = [
+        'day',
+        'year',
+        'descr',
+        'month',
         'name',
-        'program_tag'
+        'program_tag',
+        'gender'
     ];
 
 

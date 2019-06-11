@@ -88,8 +88,8 @@
                         <div class="form-group">
                         الجنس
                             <select class="form-control" name="gender">
-                                <option value="male">ذكر</option>
-                                <option value="female">انثى</option>
+                                <option value="m">ذكر</option>
+                                <option value="f">انثى</option>
                             </select>
                         </div>
                     </div>

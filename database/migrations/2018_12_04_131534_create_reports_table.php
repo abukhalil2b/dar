@@ -17,15 +17,10 @@ class CreateReportsTable extends Migration
             $table->increments('id');
 
             $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on('students');
             $table->integer('juz_id')->unsigned()->nullable();
-            $table->foreign('juz_id')->references('id')->on('juzs');
             $table->integer('sora_id')->unsigned();
-            $table->foreign('sora_id')->references('id')->on('soras');
             $table->integer('program_id')->unsigned();
-            $table->foreign('program_id')->references('id')->on('programs');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
 
             $table->string('aya_from')->nullable();
             $table->string('aya_to')->nullable();

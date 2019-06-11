@@ -25,6 +25,8 @@ class StudentController extends Controller
             'search'=>'required',
         ]); 
 
+        $states = State::all();
+        $levels = Level::all();
         $search = $request->search;
         $students = Student::where('id',$search)
         ->orWhere('first_name', 'LIKE', '%' . $search . '%')
@@ -33,7 +35,7 @@ class StudentController extends Controller
         ->orWhere('last_name', 'LIKE', '%' . $search . '%')
         ->orWhere('mobile', 'LIKE', '%' . $search . '%')
         ->paginate(100);
-        return view('admin.student.index',compact('students'));
+        return view('admin.student.index',compact('students','levels','states'));
     } 
 
     public function studentIndex()
@@ -42,6 +44,36 @@ class StudentController extends Controller
         $states = State::all();
         $students = Student::all();
         return view('admin.student.index',compact('students','levels','states'));
+    }
+
+    public function studentPresentToday()
+    {
+        $day = date('d',time()); 
+        $students = Student::whereHas('programs',function ($query)use ($day) {
+            return $query->where('student_program.day',$day);})->get();
+        $absents = Student::whereDoesntHave('programs',function ($query)use ($day) {
+            return $query->where('student_program.day',$day);})->get();
+        return view('admin.student.present.today',compact('students','absents'));
+    }
+
+    public function studentPresentMonth()
+    {
+        $month = date('m',time()); 
+        $students = Student::whereHas('programs',function ($query)use ($month) {
+            return $query->where('student_program.month',$month);})->get();
+        $absents = Student::whereDoesntHave('programs',function ($query)use ($month) {
+            return $query->where('student_program.month',$month);})->get();
+        return view('admin.student.present.month',compact('students','absents'));
+    }
+
+    public function studentPresentYear()
+    {
+        $year = date('Y',time()); 
+        $students = Student::whereHas('programs',function ($query)use ($year) {
+            return $query->where('student_program.year',$year);})->get();
+        $absents = Student::whereDoesntHave('programs',function ($query)use ($year) {
+            return $query->where('student_program.year',$year);})->get();
+        return view('admin.student.present.year',compact('students','absents'));
     }
 
     public function studentEdit($student_id)

@@ -15,10 +15,14 @@ class CreateProgramsTable extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('day')->nullable();
+            $table->string('year')->nullable();
+            $table->string('month')->nullable();
+            $table->string('descr')->nullable();
             $table->string('name');
-            $table->string('tag');
+            $table->string('program_tag');
+            $table->string('gender');
             $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

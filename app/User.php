@@ -17,14 +17,20 @@ class User extends Authenticatable implements HasMedia
     use Notifiable;
 
     protected $fillable = [
+        'village',
         'first_name',
         'second_name',
         'third_name',
         'last_name',
+        'nationality',
+        'nationality_id',
+        'passport_id',
         'gender', 
         'mobile',
         'email',
+        'note',
         'password',
+        'plain_password',
         'user_type',
         'state_id',
         'level_id'
@@ -34,7 +40,7 @@ class User extends Authenticatable implements HasMedia
         'password', 'remember_token',
     ];
 
-
+    
     public function level()
     {
         return $this->belongsTo(Level::class);

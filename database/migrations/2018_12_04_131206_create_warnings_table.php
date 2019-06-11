@@ -20,10 +20,7 @@ class CreateWarningsTable extends Migration
             $table->foreign('student_id')->references('id')->on('students');
 
             $table->integer('program_id')->unsigned()->nullable();
-            $table->foreign('program_id')->references('id')->on('programs');
-
             $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
 
             $table->string('note')->nullable();
             $table->string('comment')->nullable();

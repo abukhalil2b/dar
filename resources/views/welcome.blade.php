@@ -8,12 +8,66 @@
         
     @if($user = Auth::user())
       @if($user->user_type=='admin')
+      <div class="col-lg-3">
+        <div class="card card-active">
+            <div class="card-body card-body-img-container">
+                <img class="card-body-img" src="{{ asset('img/flag.png') }}" width=40>
+                <p>
+                برنامج ابطال الأحد
+                </p>
+            </div>
+            <a href="{{route('program.index',['program_tag'=>'sundayhero'])}}">
+                <div class="card-footer card-footer-active">
+                    <p>
+                    برنامج ابطال الأحد
+                    </p>
+                </div>    
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card card-active">
+          <div class="card-body card-body-img-container">
+              <img class="card-body-img" src="{{ asset('img/flag.png') }}" width=40>
+             <p>
+             برنامج أنوار القرآن
+             </p>
+          </div>
+          <a href="{{route('program.index',['program_tag'=>'anwar'])}}">
+              <div class="card-footer card-footer-active">
+                  <p>
+                  برنامج أنوار القرآن
+                  </p>
+              </div>    
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+            <div class="card card-active">
+              <div class="card-body card-body-img-container">
+                  <img class="card-body-img" src="{{ asset('img/flag.png') }}" width=40>
+                 <p>
+                 البرنامج الفقهي
+                 </p>
+              </div>
+              <a href="{{route('program.index',['program_tag'=>'fiqh'])}}">
+                  <div class="card-footer card-footer-active">
+                      <p>
+                      البرنامج الفقهي
+                      </p>
+                  </div>    
+              </a>
+            </div>
+        </div>
+
         <div class="col-lg-3">
             <div class="card card-active">
               <div class="card-body card-body-img-container">
                   <img class="card-body-img" src="{{ asset('img/teacher.png') }}" width=40>
                  <p>
-                 عرض كل المدرسين
+                 عرض كل المدرسون
                  </p>
               </div>
               <a href="{{route('admin.teacher.index')}}">
@@ -45,24 +99,6 @@
         </div>
 
         <div class="col-lg-3">
-        <div class="card card-active">
-                <div class="card-body card-body-img-container">
-                    <img class="card-body-img" src="{{ asset('img/calendar.png') }}" width=40>
-                    <p>
-                    كل اسبوع يقوم المشرف باضافة برنامج جديد
-                    </p>
-                </div>
-                <a href="{{route('program.index')}}">
-                    <div class="card-footer card-footer-active">
-                        <p>
-                        البرنامج الإسبوعي
-                        </p>
-                    </div>  
-                </a>
-            </div>
-        </div>
-
-        <div class="col-lg-3">
           <div class="card card-active">
               <div class="card-body card-body-img-container">
                   <img class="card-body-img" src="{{ asset('img/mon.png') }}" width=40>
@@ -80,9 +116,60 @@
           </div>
         </div>
 
+        <div class="col-lg-3">
+          <div class="card card-active">
+              <div class="card-body card-body-img-container">
+                  <img class="card-body-img" src="{{ asset('img/time.png') }}" width=40>
+                  <p>
+                    متابعة الحضور لهذا اليوم
+                  </p>
+              </div>
+              <a href="{{route('admin.student.present.today')}}">
+                  <div class="card-footer card-footer-active">
+                      <p>
+                     الطلاب
+                      </p>
+                  </div>  
+              </a>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card card-active">
+              <div class="card-body card-body-img-container">
+                  <img class="card-body-img" src="{{ asset('img/time.png') }}" width=40>
+                  <p>
+                    متابعة الحضور لهذا الشهر
+                  </p>
+              </div>
+              <a href="{{route('admin.student.present.month')}}">
+                  <div class="card-footer card-footer-active">
+                      <p>
+                     الطلاب
+                      </p>
+                  </div>  
+              </a>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card card-active">
+              <div class="card-body card-body-img-container">
+                  <img class="card-body-img" src="{{ asset('img/time.png') }}" width=40>
+                  <p>
+                    متابعة الحضور لهذا السنة
+                  </p>
+              </div>
+              <a href="{{route('admin.student.present.year')}}">
+                  <div class="card-footer card-footer-active">
+                      <p>
+                     الطلاب
+                      </p>
+                  </div>  
+              </a>
+          </div>
+        </div>
 
 
-
+        
         <div class="col-lg-3">
           <div class="card card-active">
               <div class="card-body card-body-img-container">
@@ -100,11 +187,12 @@
               </a>
           </div>
         </div>
+        
 
       @endif
     @endif
 
-      @if($program_tag=='anwar')
+    @if($program_tag=='anwar' &&auth()->user()->id !=1)
   
         <div class="col-lg-3">
           <div class="card card-active-teacher">
@@ -124,10 +212,10 @@
           </div>
         </div>
 
-        @endif
+    @endif
 
 
- @if($program_tag!='anwar')
+    @if($program_tag!='anwar' &&auth()->user()->id !=1)
 
         <div class="col-lg-3">
           <div class="card card-active-teacher">
@@ -149,7 +237,7 @@
               </a>
           </div>
         </div>
-@endif
+    @endif
 
 
 

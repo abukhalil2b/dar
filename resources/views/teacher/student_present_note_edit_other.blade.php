@@ -74,7 +74,7 @@
                                 <input type="hidden" value="{{$student->id}}" name="student_id">
                                 <input type="hidden" value="{{$student->note_id}}" name="note_id">
                                 <button type="submit" class="btn btn-light-green"> حفظ   </button>
-                                <a  class="btn btn-light-green" href="{{route('teacher.studentlist')}}">الطلاب</a>
+                                <a  class="btn btn-light-green" href="{{route('teacher.studentlist.other')}}">الطلاب</a>
                             </td>
                         </tr>
                     </table>

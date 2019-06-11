@@ -19,7 +19,6 @@ class CreateSorasTable extends Migration
             $table->string('ayat');
 
             $table->integer('juz_id')->unsigned()->nullable();
-            $table->foreign('juz_id')->references('id')->on('juzs');
             
             $table->timestamps();
         });

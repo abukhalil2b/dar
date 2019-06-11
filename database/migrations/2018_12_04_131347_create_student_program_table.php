@@ -15,15 +15,14 @@ class CreateStudentProgramTable extends Migration
     {
         Schema::create('student_program', function (Blueprint $table) {
             $table->increments('id');
-
+            $table->string('day')->nullable();
+            $table->string('year')->nullable();
+            $table->string('month')->nullable();
             $table->integer('student_id')->unsigned()->nullable();
-            $table->foreign('student_id')->references('id')->on('students');
-
             $table->integer('program_id')->unsigned()->nullable();
-            $table->foreign('program_id')->references('id')->on('programs');
-
+            $table->string('program_tag');
+            $table->string('gender');
             $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
 
             $table->time('present_time')->nullable();
             $table->boolean('present')->default(1);

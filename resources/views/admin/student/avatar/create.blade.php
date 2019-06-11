@@ -31,7 +31,7 @@
                         @csrf
                         <input type="hidden" name="student_id" value="{{$student->id}}">
                         <label  class="fileContainer">
-                            <img src="{{url('/').$avatar}}"  width="80" height="90">
+                            <img src="{{url('/').$avatar}}"  width="150" height="150">
                             <input type="file" name="avatar" onChange="document.myForm.submit();" 
                             class="form-control"> 
                         </label>
