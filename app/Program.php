@@ -14,6 +14,7 @@ class Program extends Model
         'month',
         'name',
         'program_tag',
+        'semester_id',
         'gender'
     ];
 

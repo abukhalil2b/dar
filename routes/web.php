@@ -37,6 +37,7 @@ Route::prefix('level')->group(function(){
 /*  program */
 Route::prefix('program')->group(function(){
 
+
     Route::get('/{program_tag}/index', 'ProgramController@programIndex')
     ->name('program.index');
 
@@ -57,6 +58,19 @@ Route::prefix('program')->group(function(){
 
 /* admin  student */
 Route::prefix('admin/student')->group(function(){
+
+    Route::get('/semester/create', 'StudentController@adminStudentSemesterCreate')
+    ->name('admin.student.semester.create');
+
+    Route::post('/semester/store', 'StudentController@adminStudentSemesterStore')
+    ->name('admin.student.semester.store');
+
+    Route::get('/semester/index', 'StudentController@adminStudentSemesterIndex')
+    ->name('admin.student.semester.index');
+
+    Route::post('/semester/subscribe','StudentController@adminStudentSemesterSubscribe')
+    ->name('admin.student.semester.subscribe');
+
     Route::post('/search', 'StudentController@studentSearch')
     ->name('admin.student.search');
 
@@ -147,6 +161,18 @@ Route::prefix('admin/teacher')->group(function(){
     Route::post('/shift', 'UserController@teacherShift')
     ->name('admin.teacher.shift');
 
+});
+
+/**
+ * admin progrqm
+ */
+Route::prefix('admin/program')->group(function(){
+    Route::get('/semester/index', 'ProgramController@adminProgramSemesterIndex')
+    ->name('admin.program.semester.index');
+    Route::get('/semester/create', 'ProgramController@adminProgramSemesterCreate')
+    ->name('admin.program.semester.create');
+    Route::post('/semester/store','ProgramController@adminProgramSemesterStore')
+    ->name('admin.program.semester.store');
 });
 
 /*   teacher */

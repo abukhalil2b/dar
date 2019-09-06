@@ -9,6 +9,7 @@ use App\Program;
 use App\Mark;
 use App\Level;
 use App\State;
+use App\Semester;
 use DB;
 
 class StudentController extends Controller
@@ -18,6 +19,14 @@ class StudentController extends Controller
         //$this->middleware('auth');
     }
  
+    public function adminStudentSemesterIndex()
+    {
+        $lastProgramSemester = Semester::orderBy('id','desc')->first();
+        $inStudents = Student::where(['semester_id'=>$lastProgramSemester->id,'gender'=>'m'])->get();
+        $outStudents = Student::where(['semester_id'=>'0','gender'=>'m'])->get();
+        return view('admin.student.semester.index',compact('outStudents','inStudents','lastProgramSemester'));
+    }
+
      public function studentSearch(Request $request)
     {
 
@@ -81,6 +90,15 @@ class StudentController extends Controller
         $states = State::all();
         $student = Student::find($student_id);
         return view('admin.student.edit',compact('student','states'));
+    }
+
+    public function adminStudentSemesterSubscribe(Request $request)
+    {
+        if($request->subscriber=='')return redirect()->back();
+        if(Student::whereIn('id',$request->subscriber)
+        ->update(['semester_id'=>$request->lastsemesterid])){
+            return redirect()->back()->with(['status'=>'done']);
+        }
     }
 
     public function studentStore(Request $request)

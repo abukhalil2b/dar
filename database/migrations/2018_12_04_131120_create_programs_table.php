@@ -21,6 +21,7 @@ class CreateProgramsTable extends Migration
             $table->string('descr')->nullable();
             $table->string('name');
             $table->string('program_tag');
+            $table->integer('semester_id');
             $table->string('gender');
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();

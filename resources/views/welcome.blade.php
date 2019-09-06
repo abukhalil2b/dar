@@ -11,6 +11,42 @@
       <div class="col-lg-3">
         <div class="card card-active">
             <div class="card-body card-body-img-container">
+                <img class="card-body-img" src="{{ asset('img/calendar.png') }}" width=40>
+                <p>
+                الفصول
+                </p>
+            </div>
+            <a href="{{route('admin.program.semester.index')}}">
+                <div class="card-footer card-footer-active">
+                    <p>
+                    ادارة الفصول
+                    </p>
+                </div>    
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card card-active">
+            <div class="card-body card-body-img-container">
+                <img class="card-body-img" src="{{ asset('img/calendar.png') }}" width=40>
+                <p>
+                الفصول
+                </p>
+            </div>
+            <a href="{{route('admin.student.semester.index')}}">
+                <div class="card-footer card-footer-active">
+                    <p>
+                    الطلاب المشتركين في الفصول
+                    </p>
+                </div>    
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="card card-active">
+            <div class="card-body card-body-img-container">
                 <img class="card-body-img" src="{{ asset('img/flag.png') }}" width=40>
                 <p>
                 برنامج ابطال الأحد

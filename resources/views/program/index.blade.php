@@ -5,7 +5,7 @@
 <section class="body">
     <div class="container">
        
-
+<p>{{$lastSemester->name}}</p>
 
     <form  action="{{route('program.store')}}" method="post">
         <div class="row pt-3 justify-content-center">
@@ -31,6 +31,7 @@
             
             <div class="col-lg-4">
                 <div class="form-group">
+                    <input name="semester_id" type="hidden" value="{{$lastSemester->id}}" >
                     <input name="gender" type="hidden" value="male" >
                     <input name="program_tag" type="hidden" value="{{$program_tag}}" >
                     <input name="day" type="hidden" value="<?php echo date('d',time()); ?>" >

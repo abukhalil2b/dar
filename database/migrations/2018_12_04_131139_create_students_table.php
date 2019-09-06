@@ -32,6 +32,8 @@ class CreateStudentsTable extends Migration
 
             $table->string('note')->nullable();
             $table->string('avatar')->nullable();
+
+            $table->integer('semester_id')->nullable();
             
             $table->timestamps();
         });

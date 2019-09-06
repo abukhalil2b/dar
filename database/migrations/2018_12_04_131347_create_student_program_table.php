@@ -19,6 +19,7 @@ class CreateStudentProgramTable extends Migration
             $table->string('year')->nullable();
             $table->string('month')->nullable();
             $table->integer('student_id')->unsigned()->nullable();
+            $table->integer('semester_id')->unsigned()->nullable();
             $table->integer('program_id')->unsigned()->nullable();
             $table->string('program_tag');
             $table->string('gender');
