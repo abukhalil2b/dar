@@ -69,9 +69,9 @@
                             <div class="col-lg-2">
                                 <div class="form-group ">
                                     السكن
-                                    <select name="state_id" class="form-control">
-                                        @foreach($states as $state)
-                                        <option value="{{$state->id}}"> {{$state->name}} </option>
+                                    <select name="city_id" class="form-control">
+                                        @foreach($cities as $city)
+                                        <option value="{{$city->id}}"> {{$city->name}} </option>
                                         @endforeach
                                     </select>
                                 </div>

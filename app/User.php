@@ -32,7 +32,7 @@ class User extends Authenticatable implements HasMedia
         'password',
         'plain_password',
         'user_type',
-        'state_id',
+        'city_id',
         'level_id'
     ];
 

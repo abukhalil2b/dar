@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Father extends Model
 {
-    public function state()
-    {
-    	return $this->belongsTo(State::class);
-    }
 
     public function user()
     {

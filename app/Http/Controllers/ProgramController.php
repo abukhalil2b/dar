@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Program;
 use App\Level;
 use App\Student;
-use App\Semester;
 
 class ProgramController extends Controller
 {
@@ -15,35 +14,15 @@ class ProgramController extends Controller
         $this->middleware('auth');
     }
 
-    public function adminProgramSemesterStore(Request $request)
+    public function programIndex()
     {
-        
-        $this->validate($request,[
-            'name'=>'required',
-        ]);
-
-        if(Semester::create($request->all())){
-            Student::where(['gender'=>'m'])->update(['semester_id'=>'0']);
-            return redirect()->route('admin.program.semester.index')->with(['status'=>'تم']);
-        }
-    }
-    public function adminProgramSemesterCreate()
-    {
-        return view('admin.program.semester.create');
-    }
-    public function adminProgramSemesterIndex()
-    {
-        $semesters = Semester::all();
-        return view('admin.program.semester.index',compact('semesters'));
+        $programs = Program::all();
+        return view('admin.program.create',compact('programs'));
     }
 
-
-    public function programIndex($program_tag)
+    public function programCreate()
     {
-        $lastSemester = Semester::orderBy('id','desc')->first();
-        $programs = Program::orderBy('id','desc')->where(['semester_id'=>$lastSemester->id])
-        ->with('students')->where(['program_tag'=>$program_tag,'gender'=>'male'])->get();
-        return view('program.index',compact('programs','program_tag','lastSemester'));
+        return view('admin.program.create');
     }
 
     public function programEdit($program_id)
@@ -54,13 +33,9 @@ class ProgramController extends Controller
 
     public function programStore(Request $request)
     {
-        
         $this->validate($request,[
-            'name'        =>'required',
             'program_tag' =>'required',
-            'semester_id' =>'required',
         ]);
-
         if(Program::create($request->all())){
             return redirect()->back()->with(['status'=>'تم']);
         }
@@ -86,11 +61,31 @@ class ProgramController extends Controller
         return view('level.index',compact('levels'));
     }
 
+    public function programStudentlist($program_tag)
+    {
 
+        if($program_tag=='sundayhero'){
+            $lastProgram = Program::orderBy('id','desc')->where('program_tag','sundayhero')->first();
+            $students = Student::whereHas('studentHasSundayhero',function($query)use($lastProgram){
+                $query->where('student_sundayhero_program.month',$lastProgram->month);
+            })->get();
+        }
+        
+        if($program_tag=='anwar'){
+            $lastProgram = Program::orderBy('id','desc')->where('program_tag','anwar')->first();
+            $students = Student::whereHas('studentHasAnwar',function($query)use($lastProgram){
+                $query->where('student_anwar_program.month',$lastProgram->month);
+            })->get();
+        }
 
+        if($program_tag=='fiqh'){
+            $lastProgram = Program::orderBy('id','desc')->where('program_tag','fiqh')->first();
+            $students = Student::whereHas('studentHasFiqh',function($query)use($lastProgram){
+                $query->where('student_figh_program.month',$lastProgram->month);
+            })->get();
+        }
 
-
-
-
+        return view('admin.program.studentlist',compact('students','lastProgram'));
+    }
 
 }

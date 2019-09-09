@@ -16,17 +16,20 @@
 
                     <tr>
                         <td>
-                            {{$warning->student->first_name}}
+                            {{$warning->student->first_name}} 
+                            {{$warning->student->second_name}} 
+                            {{$warning->student->third_name}} 
+                            {{$warning->student->last_name}}
                         </td>
                         <td>
                             {{$warning->note}}
-                            
                         </td>
                         <td>
                             <form action="{{route('admin.warning.update')}}" method="post">
                                 @csrf
                                 <input class="form-control" value="{{$warning->comment}}" name="comment">
                                 <input type="hidden" value="{{$warning->id}}" name="warning_id">
+                                <input type="hidden" value="{{$warning->program_id}}" name="program_id">
                                 <br>
                                 <button type="submit" class="btn btn-block">حفظ</button>
                             </form>

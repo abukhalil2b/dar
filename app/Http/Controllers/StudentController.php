@@ -8,8 +8,8 @@ use App\Student;
 use App\Program;
 use App\Mark;
 use App\Level;
-use App\State;
-use App\Semester;
+use App\City;
+use App\Record;
 use DB;
 
 class StudentController extends Controller
@@ -19,13 +19,31 @@ class StudentController extends Controller
         //$this->middleware('auth');
     }
  
-    public function adminStudentSemesterIndex()
+
+    public function studentSubscribeStore(Request $request)
     {
-        $lastProgramSemester = Semester::orderBy('id','desc')->first();
-        $inStudents = Student::where(['semester_id'=>$lastProgramSemester->id,'gender'=>'m'])->get();
-        $outStudents = Student::where(['semester_id'=>'0','gender'=>'m'])->get();
-        return view('admin.student.semester.index',compact('outStudents','inStudents','lastProgramSemester'));
-    }
+        $student = Student::find($request->student_id);
+        if($request->program_tag=='sundayhero'){
+            $program = Program::orderBy('id','desc')
+            ->where('program_tag','sundayhero')->first();
+            $student->studentHasSundayhero()->attach($program->id,['month'=>$program->month,'year'=>$program->year]);            
+        }
+
+        if($request->program_tag=='anwar'){
+            $program = Program::orderBy('id','desc')
+            ->where('program_tag','anwar')->first();
+            $student->studentHasAnwar()->attach($program->id,['month'=>$program->month,'year'=>$program->year]);
+        }
+        
+        if($request->program_tag=='fiqh'){
+            $program = Program::orderBy('id','desc')
+            ->where('program_tag','fiqh')->first();
+            $student->studentHasFiqh()->attach($program->id,['month'=>$program->month,'year'=>$program->year]);
+        }
+        
+        return redirect()->route('admin.student.index');
+    } 
+
 
      public function studentSearch(Request $request)
     {
@@ -34,7 +52,7 @@ class StudentController extends Controller
             'search'=>'required',
         ]); 
 
-        $states = State::all();
+        $cities = City::all();
         $levels = Level::all();
         $search = $request->search;
         $students = Student::where('id',$search)
@@ -44,61 +62,50 @@ class StudentController extends Controller
         ->orWhere('last_name', 'LIKE', '%' . $search . '%')
         ->orWhere('mobile', 'LIKE', '%' . $search . '%')
         ->paginate(100);
-        return view('admin.student.index',compact('students','levels','states'));
+        return view('admin.student.index',compact('students','levels','cities'));
     } 
 
     public function studentIndex()
     {
         $levels = Level::all();
-        $states = State::all();
+        $cities = City::all();
         $students = Student::all();
-        return view('admin.student.index',compact('students','levels','states'));
+        $fiqhLastProgram = Program::orderBy('id','desc')->where('program_tag','fiqh')->first();
+        $sundayheroLastProgram = Program::orderBy('id','desc')->where('program_tag','sundayhero')->first();
+        $anwarLastProgram = Program::orderBy('id','desc')->where('program_tag','anwar')->first();
+        return view('admin.student.index',compact('students','levels','cities',
+            'fiqhLastProgram',
+            'sundayheroLastProgram',
+            'anwarLastProgram'
+        ));
     }
 
-    public function studentPresentToday()
+    public function studentPresentToday($tag)
     {
-        $day = date('d',time()); 
-        $students = Student::whereHas('programs',function ($query)use ($day) {
-            return $query->where('student_program.day',$day);})->get();
-        $absents = Student::whereDoesntHave('programs',function ($query)use ($day) {
-            return $query->where('student_program.day',$day);})->get();
-        return view('admin.student.present.today',compact('students','absents'));
+        
+        $lastRecord = Record::orderBy('id','desc')->where(['program_tag'=>$tag])->first();
+        if($lastRecord==null){
+            return redirect()->route('admin.record.create')->with(['status'=>'اولا قم بإنشاء برنامج من هنا']);
+        }
+        $students = DB::table('student_program')
+        ->where(['record_id'=>$lastRecord->id,'present'=>1])
+        ->leftjoin('students','student_program.student_id','students.id')->get();
+
+        $absents = DB::table('student_program')
+        ->where(['record_id'=>$lastRecord->id,'present'=>0])
+        ->leftjoin('students','student_program.student_id','students.id')->get();
+
+        return view('admin.student.present.today',compact('students','absents','lastRecord'));
+        
     }
 
-    public function studentPresentMonth()
-    {
-        $month = date('m',time()); 
-        $students = Student::whereHas('programs',function ($query)use ($month) {
-            return $query->where('student_program.month',$month);})->get();
-        $absents = Student::whereDoesntHave('programs',function ($query)use ($month) {
-            return $query->where('student_program.month',$month);})->get();
-        return view('admin.student.present.month',compact('students','absents'));
-    }
 
-    public function studentPresentYear()
-    {
-        $year = date('Y',time()); 
-        $students = Student::whereHas('programs',function ($query)use ($year) {
-            return $query->where('student_program.year',$year);})->get();
-        $absents = Student::whereDoesntHave('programs',function ($query)use ($year) {
-            return $query->where('student_program.year',$year);})->get();
-        return view('admin.student.present.year',compact('students','absents'));
-    }
 
     public function studentEdit($student_id)
     {
-        $states = State::all();
+        $cities = City::all();
         $student = Student::find($student_id);
-        return view('admin.student.edit',compact('student','states'));
-    }
-
-    public function adminStudentSemesterSubscribe(Request $request)
-    {
-        if($request->subscriber=='')return redirect()->back();
-        if(Student::whereIn('id',$request->subscriber)
-        ->update(['semester_id'=>$request->lastsemesterid])){
-            return redirect()->back()->with(['status'=>'done']);
-        }
+        return view('admin.student.edit',compact('student','cities'));
     }
 
     public function studentStore(Request $request)
@@ -107,7 +114,6 @@ class StudentController extends Controller
             'first_name'        =>'required',
             'second_name'       =>'required',
             'last_name'         =>'required',
-            'gender'            =>'required',
         ]);
 
         if($student = Student::create($request->all())){
@@ -151,14 +157,12 @@ class StudentController extends Controller
         'second_name'       =>$request->second_name,
         'third_name'        =>$request->third_name,
         'last_name'         =>$request->last_name,
-        'gender'            =>$request->gender,
         'parent_follow_up'  =>$request->parent_follow_up,
         'mobile'            =>$request->mobile,
         'national_id'       =>$request->national_id,
         'age'               =>$request->age,
-        'started_at_grade'  =>$request->started_at_grade,
         'grade'             =>$request->grade,
-        'state_id'          =>$request->state_id,
+        'city_id'          =>$request->city_id,
         'note'              =>$request->note,
     ];
 
@@ -192,12 +196,12 @@ class StudentController extends Controller
     public function markIndex()
     {
         $Program = Program::orderBy('id','DESC')->first();
-        $marks = Mark::selectRaw('sum(marks.point) as total_point, marks.student_id, students.first_name as student_name, programs.name as program_name')
+        $marks = Mark::selectRaw('sum(marks.point) as total_point, marks.student_id, students.first_name as student_name, programs.program_tag as program_tag')
         ->join('students','students.id','=','marks.student_id')
         ->join('programs','programs.id','=','marks.program_id')
         ->where('marks.program_id',$Program->id)
         ->orderBy('total_point','DESC')
-        ->groupBy('marks.student_id','marks.program_id','students.first_name','programs.name')
+        ->groupBy('marks.student_id','marks.program_id','students.first_name','programs.program_tag')
         ->get();
         
         return view('admin.student.mark.index',compact('marks','Program'));

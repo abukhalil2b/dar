@@ -37,9 +37,14 @@ Route::prefix('level')->group(function(){
 /*  program */
 Route::prefix('program')->group(function(){
 
-
-    Route::get('/{program_tag}/index', 'ProgramController@programIndex')
+    Route::get('index', 'ProgramController@programIndex')
     ->name('program.index');
+
+    Route::get('create', 'ProgramController@programCreate')
+    ->name('program.create');
+
+    Route::get('/{program_tag}/studentlist', 'ProgramController@programStudentlist')
+    ->name('program.studentlist');
 
     Route::get('/{program_id}/edit', 'ProgramController@programEdit')
     ->name('program.edit');
@@ -53,23 +58,12 @@ Route::prefix('program')->group(function(){
 
 });
 
- 
-
 
 /* admin  student */
 Route::prefix('admin/student')->group(function(){
-
-    Route::get('/semester/create', 'StudentController@adminStudentSemesterCreate')
-    ->name('admin.student.semester.create');
-
-    Route::post('/semester/store', 'StudentController@adminStudentSemesterStore')
-    ->name('admin.student.semester.store');
-
-    Route::get('/semester/index', 'StudentController@adminStudentSemesterIndex')
-    ->name('admin.student.semester.index');
-
-    Route::post('/semester/subscribe','StudentController@adminStudentSemesterSubscribe')
-    ->name('admin.student.semester.subscribe');
+     
+    Route::post('/subscribe', 'StudentController@studentSubscribeStore')
+    ->name('admin.student.subscribe.store');
 
     Route::post('/search', 'StudentController@studentSearch')
     ->name('admin.student.search');
@@ -77,14 +71,8 @@ Route::prefix('admin/student')->group(function(){
     Route::get('/index', 'StudentController@studentIndex')
     ->name('admin.student.index');
     
-    Route::get('/present/today', 'StudentController@studentPresentToday')
+    Route::get('{program}/present/today', 'StudentController@studentPresentToday')
     ->name('admin.student.present.today');
-
-    Route::get('/present/month', 'StudentController@studentPresentMonth')
-    ->name('admin.student.present.month');
-
-    Route::get('/present/year', 'StudentController@studentPresentYear')
-    ->name('admin.student.present.year');
 
     Route::get('/{student_id}/edit', 'StudentController@studentEdit')
     ->name('admin.student.edit');
@@ -130,7 +118,7 @@ Route::prefix('admin/warning')->group(function(){
     Route::get('{warning_id}/edit', 'WarningController@warningAdminCommentCreate')
     ->name('admin.warning.edit');
 
-    Route::post('/update', 'WarningController@warningAdminCommentStore')
+    Route::post('/update', 'WarningController@warningAdminCommentUpdate')
     ->name('admin.warning.update');
     
 });
@@ -163,16 +151,17 @@ Route::prefix('admin/teacher')->group(function(){
 
 });
 
+
+
 /**
- * admin progrqm
+ *      admin record
  */
-Route::prefix('admin/program')->group(function(){
-    Route::get('/semester/index', 'ProgramController@adminProgramSemesterIndex')
-    ->name('admin.program.semester.index');
-    Route::get('/semester/create', 'ProgramController@adminProgramSemesterCreate')
-    ->name('admin.program.semester.create');
-    Route::post('/semester/store','ProgramController@adminProgramSemesterStore')
-    ->name('admin.program.semester.store');
+Route::prefix('admin/')->group(function(){
+    Route::get('record/index', 'AdminController@adminRecordIndex')->name('admin.record.index');
+    Route::get('record/create', 'AdminController@adminRecordCreate')->name('admin.record.create');
+    Route::post('record/store','AdminController@adminRecordStore')->name('admin.record.store');
+
+    Route::post('record/present/store','AdminController@adminPresentStore')->name('admin.record.present.store');
 });
 
 /*   teacher */
@@ -180,18 +169,12 @@ Route::prefix('teacher')->group(function(){
 
     Route::get('/studentlist', 'TeacherController@studentList')
     ->name('teacher.studentlist');
-    Route::get('/studentlist/other', 'TeacherController@studentListOther')
-    ->name('teacher.studentlist.other');
     
+    Route::get('anwar/present/{student_id}/{present_id}/create', 'TeacherController@anwarPresentCreate')
+    ->name('teacher.anwar.present.create');
 
-    Route::get('/show/{student_id}/student', 'TeacherController@showStudent')
-    ->name('teacher.show.student');
-
-    Route::get('/show/{student_id}/student/other', 'TeacherController@showStudentOther')
-    ->name('teacher.show.student.other');
-
-    Route::post('/writedownnotes/store', 'TeacherController@writeDownNoteStore')
-    ->name('teacher.writedownnotes.store');
+    Route::post('anwar/present/store', 'TeacherController@anwarPresentStore')
+    ->name('teacher.anwar.present.store');
 
     Route::post('/writedownnotes/store/other', 'TeacherController@writeDownNoteStoreOther')
     ->name('teacher.writedownnotes.store.other');

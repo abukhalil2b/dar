@@ -20,34 +20,68 @@ class TeacherController extends Controller
 
     public function studentList()
     {	
-        $lastProgram = Program::orderBy('id','desc')->first();
-        $level_id = Auth::user()->level_id;
-        if($level_id==null){
-            $students = Student::with(['programs'=>function($q) use($lastProgram ){return $q->where('program_id',$lastProgram->id)->select('present');}])->get();
-        }else{
-            $students = Student::whereHas('levelHasStudentPermission',function($query) use ($level_id){
-                $query->where('level_has_student_permission.level_id',$level_id);
-            })->get();
-
-        }
-        //return $students[0]->programs[0]->present ; 
-        
+        $students = DB::table('student_program')->leftjoin('students','student_program.student_id','students.id')
+        ->select(
+            DB::raw('
+                    student_program.id as present_id,
+                    student_program.notebook,
+                    student_program.present_time,
+                    student_program.white_dishdash,
+                    student_program.not_mosbil,
+                    student_program.pen_reader,
+                    student_program.white_mosar,
+                    student_program.present,
+                    students.id as student_id,
+                    students.first_name,
+                    students.last_name 
+            '))
+        ->get();
         return view('teacher.student_list',compact('students'));
     }
 
-    public function studentListOther(){
-        $lastProgram = Program::orderBy('id','desc')->first();
-        $level_id = Auth::user()->level_id;
-        if($level_id==null){
-            $students = Student::with(['programs'=>function($q) use($lastProgram ){return $q->where('program_id',$lastProgram->id)->select('present');}])->get();
-        }else{
-            $students = Student::whereHas('levelHasStudentPermission',function($query) use ($level_id){
-                $query->where('level_has_student_permission.level_id',$level_id);
-            })->get();
-
+    public function anwarPresentCreate($student_id,$present_id)
+    {   
+        $students = DB::table('student_program')->leftjoin('students','student_program.student_id','students.id')
+        ->select(
+            DB::raw('
+                    student_program.id as present_id,
+                    student_program.notebook,
+                    student_program.present_time,
+                    student_program.white_dishdash,
+                    student_program.not_mosbil,
+                    student_program.pen_reader,
+                    student_program.white_mosar,
+                    student_program.present,
+                    student_program.other_note,
+                    students.id as student_id,
+                    students.first_name,
+                    students.last_name 
+            '))
+        ->where('students.id',$student_id)->get();
+        foreach($students as $student){
+            $student;
         }
-        return view('teacher.student_list_other',compact('students'));
+        return view('teacher.student_present_create',compact('student'));
     }
+
+    public function anwarPresentStore(Request $request)
+    {   
+    // return $request->all();
+        $data = [
+            'present_time'      =>$request->present_time,
+            'pen_reader'        =>$request->pen_reader,
+            'notebook'          =>$request->notebook,
+            'white_dishdash'    =>$request->white_dishdash,
+            'white_mosar'       =>$request->white_mosar,
+            'not_mosbil'        =>$request->not_mosbil,
+            'present'           =>$request->present,
+            'other_note'        =>$request->other_note
+        ];
+        DB::table('student_program')->where('id',$request->present_id)->update($data);
+        return redirect()->back()->with(['status'=>'تم']);
+    }
+
+
 
     public function writeDownNoteStore(Request $request)
     {	
@@ -76,108 +110,6 @@ class TeacherController extends Controller
             }
     }
 
-    public function writeDownNoteStoreOther(Request $request)
-    {   
-        //return $request->all();
-        
-     $data= [
-            'present_time'  =>$request->present_time,
-            'gender'        =>$request->gender,
-            'white_dishdash'=>$request->white_dishdash,
-            'white_mosar'   =>$request->white_mosar,
-            'not_mosbil'    =>$request->not_mosbil,
-            'other_note'    =>$request->other_note,
-            'user_id'       =>$request->user_id,
-            'student_id'    =>$request->student_id,
-            'program_id'    =>$request->program_id,
-            'program_tag'   =>$request->program_tag,
-            'year'          =>$request->year,
-            'month'         =>$request->month,
-            'day'           =>$request->day
-            ];
-            
-            if(DB::table('student_program')->insert($data)){
-                return redirect()->route('teacher.studentlist.other')->with(['status'=>'تم']);
-            }
-    }
-
-    public function showStudent($student_id)
-    {	
-        $lastProgram = Program::orderBy('id','desc')->first();
-        if($lastProgram!=null){
-             $students = DB::table('students')->leftJoin('student_program','students.id','student_program.student_id')
-            ->where('students.id',$student_id)
-            // ->where('student_program.present',1)
-            ->where('student_program.program_id',$lastProgram->id)
-            ->select('students.id','students.first_name','students.second_name',
-                'students.third_name','students.last_name',
-                'student_program.id as note_id','student_program.present_time',
-                'student_program.white_dishdash',
-                'student_program.not_mosbil','student_program.pen_reader','student_program.notebook',
-                'student_program.white_mosar','student_program.other_note'
-            )->get();
-            if(count($students)>0){
-                //edit note
-                $student = $students[0];
-                return view('teacher.student_present_note_edit',compact('student'));
-            }
-            else{
-                //new note
-                $student = Student::find($student_id);
-                $msg = 'البيانات غير محفوظة';
-                return view('teacher.student_present_note_create',compact('student','lastProgram','msg'));
-            }   
-        }
-        
-    	
-    }
-
-
-    public function showStudentOther($student_id)
-    {   
-        $lastProgram = Program::orderBy('id','desc')->first();
-        if($lastProgram!=null){
-             $students = DB::table('students')->leftJoin('student_program','students.id','student_program.student_id')
-            ->where('students.id',$student_id)
-            // ->where('student_program.present',1)
-            ->where('student_program.program_id',$lastProgram->id)
-            ->select('students.id','students.first_name','students.second_name',
-                'students.third_name','students.last_name',
-                'student_program.id as note_id','student_program.present_time',
-                'student_program.white_dishdash',
-                'student_program.not_mosbil','student_program.pen_reader','student_program.notebook',
-                'student_program.white_mosar','student_program.other_note'
-            )->get();
-            if(count($students)>0){
-                //edit note
-                $student = $students[0];
-                return view('teacher.student_present_note_edit_other',compact('student'));
-            }
-            else{
-                //new note
-                $student = Student::find($student_id);
-                $msg = 'البيانات غير محفوظة';
-                return view('teacher.student_present_note_create_other',compact('student','lastProgram','msg'));
-            }   
-        }
-        
-    }
-
-
-    public function writeDownNoteUpdate(Request $request)
-    {   //return $request->all();
-        $data = [
-            'present_time'=>$request->present_time,
-            'pen_reader'=>$request->pen_reader,
-            'notebook'=>$request->notebook,
-            'white_dishdash'=>$request->white_dishdash,
-            'white_mosar'=>$request->white_mosar,
-            'not_mosbil'=>$request->not_mosbil,
-            'other_note'=>$request->other_note
-        ];
-        DB::table('student_program')->where('id',$request->note_id)->update($data);
-        return redirect()->back()->with(['status'=>'تم']);
-    }
 
 
     public function reportStudentCreate($student_id){

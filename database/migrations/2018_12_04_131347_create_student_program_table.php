@@ -15,25 +15,21 @@ class CreateStudentProgramTable extends Migration
     {
         Schema::create('student_program', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('day')->nullable();
+            $table->integer('record_id')->unsigned();
             $table->string('year')->nullable();
             $table->string('month')->nullable();
-            $table->integer('student_id')->unsigned()->nullable();
-            $table->integer('semester_id')->unsigned()->nullable();
-            $table->integer('program_id')->unsigned()->nullable();
+            $table->integer('student_id')->unsigned();
+            $table->integer('program_id')->unsigned();
             $table->string('program_tag');
-            $table->string('gender');
             $table->integer('user_id')->unsigned()->nullable();
-
             $table->time('present_time')->nullable();
-            $table->boolean('present')->default(1);
+            $table->boolean('present')->default(0);
             $table->boolean('white_dishdash')->nullable();
             $table->boolean('not_mosbil')->nullable();
             $table->boolean('pen_reader')->nullable();
             $table->boolean('notebook')->nullable();
             $table->boolean('white_mosar')->nullable();
             $table->string('other_note')->nullable();
-            
             $table->timestamps();
         });
     }

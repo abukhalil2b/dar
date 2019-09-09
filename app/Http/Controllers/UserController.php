@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Level;
-use App\State;
+use App\City;
 use App\Student;
 use App\Program;
 use DB;
@@ -25,8 +25,8 @@ class UserController extends Controller
     {
         $teachers = User::where('user_type','teacher')->get();
         $levels = Level::all();
-        $states = State::all();
-        return view('admin.teacher.index',compact('teachers','levels','states'));
+        $cities = City::all();
+        return view('admin.teacher.index',compact('teachers','levels','cities'));
     }
 
     public function teacherDetails($user_id)
@@ -37,9 +37,9 @@ class UserController extends Controller
 
     public function teacherEdit($user_id)
     {
-        $states = State::all();
+        $cities = City::all();
         $teacher = User::find($user_id);
-        return view('admin.teacher.edit',compact('teacher','states'));
+        return view('admin.teacher.edit',compact('teacher','cities'));
     }
 
     public function teacherStore(Request $request)
@@ -115,8 +115,9 @@ class UserController extends Controller
 
     public function teacherShiftCreate($user_id)
     {
+        $levels = Level::all();
         $user = User::find($user_id);
-        return view('admin.teacher.shift',compact('user'));
+        return view('admin.teacher.shift',compact('user','levels'));
     }
 
     public function teacherShift(Request $request)
@@ -126,9 +127,9 @@ class UserController extends Controller
             'level_id'   =>'required'
         ]);
 
-
-        if(User::where('id',$request->user_id)->update(['level_id'=>$request->level_id])){
-            return redirect()->back()->with(['status'=>'تم']);
+        $user_id = $request->user_id;
+        if(User::where('id',$user_id)->update(['level_id'=>$request->level_id])){
+            return redirect()->route('admin.teacher.details',['teacher_id'=>$user_id])->with(['status'=>'تم']);
         }
 
     }

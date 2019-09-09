@@ -22,7 +22,7 @@ class CreateFathersTable extends Migration
 
             $table->string('mobile')->nullable();
             $table->string('note')->nullable();
-            $table->integer('state_id')->unsigned()->nullable();
+            $table->integer('city_id')->unsigned()->nullable();
 
             $table->timestamps();
         });

@@ -14,23 +14,23 @@ class FatherTableSeeder extends Seeder
         $fathers = [
             [
             'first_name'=>'الاب 1',
-            'state_id'=>1,
+            'city_id'=>1,
         	],
             [
             'first_name'=>'الاب2',
-            'state_id'=>1,
+            'city_id'=>1,
         	],
             [
             'first_name'=>'الاب3',
-            'state_id'=>1,
+            'city_id'=>1,
         	],
             [
             'first_name'=>'الاب4',
-            'state_id'=>1,
+            'city_id'=>1,
         	],
             [
             'first_name'=>'الاب5',
-            'state_id'=>1,]
+            'city_id'=>1,]
             ];
 
         foreach ($fathers as $father) {

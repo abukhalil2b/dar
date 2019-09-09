@@ -24,10 +24,10 @@ class WarningController extends Controller
     	return view('admin.student.warning_list_edit',compact('warning'));
     }
 
-    public function warningAdminCommentStore(Request $request){
+    public function warningAdminCommentUpdate(Request $request){
         // return $request->all();
         Warning::where('id',$request->warning_id)->update(['comment'=>$request->comment]);
-        return redirect()->route('admin.warning.student.index');
+        return redirect()->route('admin.warning.student.index',['program_id'=>$request->program_id]);
     }
 
 

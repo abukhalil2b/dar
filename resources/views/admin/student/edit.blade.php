@@ -55,12 +55,7 @@
                             <input name="age" class="form-control" value="{{$student->age}}">
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-12 ">
-                        <div class="form-group">
-                        الصف 
-                            <input name="started_at_grade" class="form-control" value="{{$student->started_at_grade}}" >
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-3 col-md-12 ">
                         <div class="form-group">
                         رقم البطاقة الشخصية
@@ -69,19 +64,8 @@
                     </div>
                     <div class="col-lg-3 col-md-12 ">
                         <div class="form-group">
-                        الصف الحالي
+                        الصف 
                             <input name="grade" class="form-control" value="{{$student->grade}}" >
-                        </div>
-                    </div>
-                   
-                    <div class="col-lg-3 col-md-12 ">
-                        <div class="form-group">
-                        السكن
-                            <select class="form-control" name="state_id">
-                                @foreach($states as $state)
-                                <option {{$state->id==$student->state_id?'selected':''}} value="{{$state->id}}"> {{$state->name}} </option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 ">

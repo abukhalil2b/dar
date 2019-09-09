@@ -8,31 +8,23 @@ class Program extends Model
 {
 
     protected $fillable = [
-        'day',
         'year',
-        'descr',
         'month',
-        'name',
         'program_tag',
-        'semester_id',
-        'gender'
     ];
-
 
     public function students()
     {
-        return $this->belongsToMany(Student::class,'student_program','program_id','student_id')
-        ->withPivot('present_time');
+        return $this->belongsToMany(Student::class,'student_program','program_id','student_id');
     }
-
     public function reports()
     {
         return $this->hasMany(Report::class);
     }
-
     public function marks()
     {
         return $this->hasMany(Mark::class);
     }
+
 
 }

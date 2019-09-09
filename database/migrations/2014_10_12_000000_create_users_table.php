@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('plain_password');
 
-            $table->integer('state_id')->unsigned()->nullable();
+            $table->integer('city_id')->unsigned()->nullable();
             $table->integer('level_id')->unsigned()->nullable();
 
             $table->rememberToken();

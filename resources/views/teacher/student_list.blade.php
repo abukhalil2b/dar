@@ -7,9 +7,7 @@
             <div class="col-lg-12">
 
                 
-                <span class="body-title-lg">  قائمة الطلاب  </span>
-                <span class="body-title-sm ">
-                    العدد
+                <span class="body-title-lg">  عدد الطلاب  في برنامج انوار القرآن</span>
                     <span class="badge badge-secondary">{{$students->count()}}</span>
                 </span>
             </div>
@@ -33,52 +31,18 @@
 
         <div class="row">
             <div class="col-lg-12">
-                    <table class="table table-bordered">
-                       
-                        @foreach($students as $student)
-                        <tr>
-                            <td>
-                                {{$student->id}}
-                            </td>
-                            <td>
-                                {{$student->first_name}} {{$student->last_name}}
-                            </td>
-                            <td>
-
-                                <a href="{{route('teacher.show.student',['student_id'=>$student->id])}}">
-                                   <img src="{{asset('img/search.png')}}" width="40"> 
-                                </a>
-                                 الحضور
-                                 @foreach($student->programs as $program)
-                                    @if($program->present==1)
-                                        <img src="{{asset('img/tick.png')}}" width="25">
-                                    @endif
-                                 @endforeach
-                                 
-                            </td>
-                            <td>
-                                <a href="{{route('student.report.create',['student_id'=>$student->id])}}">
-                                   <img src="{{asset('img/note.png')}}" width="40">  
-                                </a>
-                                الحفظ
-                            </td>
-                            <td>
-                                <a href="">
-                                   <img src="{{asset('img/awards.png')}}" width="30">  
-                                </a>
-                                عدد الأجزاء المحفوظة
-                            </td>
-                            <td>
-                                <a href="{{route('student.warning.create',['student_id'=>$student->id])}}">
-                                   <img src="{{asset('img/mon.png')}}" width="40">  
-                                </a>
-                                الملاحظات
-                            </td>
-                        </tr>
-                        @endforeach
-                        
-                    </table>
-
+                <table class="table table-bordered">
+                    @foreach($students as $student)
+                     <tr>
+                        <td>
+                        <a href="{{route('teacher.anwar.present.create',
+                        ['student_id'=>$student->student_id,'present_id'=>$student->present_id])}}" class="btn-block">
+                            {{$student->student_id}}-{{$student->first_name}} {{$student->last_name}}
+                        </a>
+                        </td>
+                    </tr>   
+                    @endforeach
+                </table>
             </div>
         </div>
 

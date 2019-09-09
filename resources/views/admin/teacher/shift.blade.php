@@ -20,10 +20,9 @@
                     <div class="form-group">
                         المستوى
                         <select name="level_id" class="form-control" style="min-width: 150px;">
-                            <option value="1">المستوى الاول</option>
-                            <option value="2">المستوى الثاني</option>
-                            <option value="3">المستوى الثالث</option>
-                            <option value="5">المستوى الرابع</option>
+                            @foreach($levels as $level)
+                            <option value="{{$level->id}}">{{$level->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">

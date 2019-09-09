@@ -31,7 +31,7 @@
             
             <div class="col-lg-4">
                 <div class="form-group">
-                    <input name="semester_id" type="hidden" value="{{$lastSemester->id}}" >
+                    
                     <input name="gender" type="hidden" value="male" >
                     <input name="program_tag" type="hidden" value="{{$program_tag}}" >
                     <input name="day" type="hidden" value="<?php echo date('d',time()); ?>" >

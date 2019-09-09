@@ -61,7 +61,14 @@ body{
   font-size: 18px;
   font-weight: bold;
 }
-
+/* subscribe btn*/
+.btn0 {
+  border: 1px solid #418c8c;
+  border-radius: 4px;
+  background-color: #f0fffc;
+  color: #495057;
+  width: 150px;
+}
 
 /* btn */
 .btn-logout{
@@ -163,7 +170,12 @@ body{
 .edit-link{
   margin-right: 10px;
 }
-
+.program-title{
+  color: brown;
+  font-size: 11px;
+  font-weight: bold;
+  display: block;
+}
 /*file: teacher index*/
 .teacher-edit-link{
   margin-right: 10px;
@@ -210,4 +222,8 @@ body{
 }
 
 
+.time{
+  color: brown;
+  font-size: 11px;
+}
 

@@ -5,7 +5,7 @@
     <div class="container">
             <p>
                 الحضور والغياب لهذا اليوم بتاريخ
-                {{date('d',time())}}/ {{date('m',time())}} /{{date('Y',time())}}
+                {{$lastRecord->day}} / {{$lastRecord->month}} / {{$lastRecord->year}}
             </p>          
         <div class="row pt-3">
           

@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -18,15 +18,13 @@ class Student extends Model implements HasMedia
     'second_name',
     'third_name',
     'last_name',
-    'gender',
     'parent_follow_up',
     'mobile',
     'national_id',
     'age',
-    'started_at_grade',
     'grade',
     'level_id',
-    'state_id',
+    'city_id',
     'note'];
 
     // public function registerMediaConversions(Media $media = null)
@@ -78,5 +76,51 @@ class Student extends Model implements HasMedia
         return $this->hasMany(Mark::class);
     }
 
+    public function studentHasSundayhero()
+    {
+        return $this->belongsToMany(Program::class,'student_sundayhero_program','student_id','program_id');
+    }
+    public function studentHasFiqh()
+    {
+        return $this->belongsToMany(Program::class,'student_figh_program','student_id','program_id');
+    }
+    public function studentHasAnwar()
+    {
+        return $this->belongsToMany(Program::class,'student_anwar_program','student_id','program_id');
+    }
+
+    /*  Last Program */
+    public function sundayheroLastProgram(){
+        return Program::orderBy('id','desc')->where('program_tag','sundayhero')->first();
+    }
+
+    public function fiqhLastProgram(){
+        return Program::orderBy('id','desc')->where('program_tag','fiqh')->first();
+    }
+
+    public function anwarLastProgram(){
+        return Program::orderBy('id','desc')->where('program_tag','anwar')->first();
+    }
+    /*  Last Program */
+    public function isHasAnwar(){
+        $lastProgram = $this->anwarLastProgram();
+        return (bool) DB::table('student_anwar_program')
+        ->where(['student_id'=>$this->id,'program_id'=>$lastProgram->id])
+        ->count();
+    } 
+    public function isHasFiqh(){
+        $lastProgram = $this->fiqhLastProgram();
+        return (bool) DB::table('student_figh_program')
+        ->where(['student_id'=>$this->id,'program_id'=>$lastProgram->id])
+        ->count();
+    } 
+    public function isHasSundayhero(){
+        $lastProgram = $this->sundayheroLastProgram();
+        return (bool) DB::table('student_sundayhero_program')
+        ->where(['student_id'=>$this->id,'program_id'=>$lastProgram->id])
+        ->count();
+    }  
+
+ 
 
 }

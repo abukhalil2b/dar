@@ -74,12 +74,6 @@
                     </div>
                     <div class="col-lg-3 col-md-12 ">
                         <div class="form-group">
-                        الصف 
-                            <input name="started_at_grade" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-12 ">
-                        <div class="form-group">
                         رقم البطاقة الشخصية
                             <input name="national_id" type="number" class="form-control">
                         </div>
@@ -94,22 +88,14 @@
                     <div class="col-lg-3 col-md-12 ">
                         <div class="form-group">
                         السكن
-                            <select class="form-control" name="state_id">
-                                @foreach($states as $state)
-                                <option value="{{$state->id}}"> {{$state->name}} </option>
+                            <select class="form-control" name="city_id">
+                                @foreach($cities as $city)
+                                <option value="{{$city->id}}"> {{$city->name}} </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-12 ">
-                        <div class="form-group">
-                        الجنس
-                            <select name="gender" class="form-control">
-                                <option value="m">ذكر</option>
-                                <option value="f">انثى</option>
-                            </select>
-                        </div>
-                    </div>
+                    
                     <div class="col-lg-3 col-md-12 ">
                         <div class="form-group">
                         الشخص الذي يتابعه في البيت
@@ -141,7 +127,7 @@
         </form>
 
     <hr>
-        <span class="body-title-lg"> قائمة الطلاب </span>
+        <span class="body-title-lg"> عدد الطلاب {{$students->count()}} </span>
         <form action="{{route('admin.student.search')}}" method="post">
             @csrf
             <div class="row pt-5 justify-content-center" >
@@ -154,24 +140,34 @@
                 </div>
             </div>            
         </form>
-
-
         <div class="row pt-3">
             <div class="col-lg-12">
                 <table class="table table-bordered">
                     <tr>
                         <td>الصورة</td>
                         <td>اسم الطالب</td>
-                        <td> المستوى الذي فيه</td>
+                        <td>انوار القرآن
+                            <span class="program-title" >
+                             سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
+                            </span>
+                        </td>
+                        <td>المدرسة الفقهية
+                            <span class="program-title" >
+                             سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
+                            </span>
+                        </td>
+                        <td>ابطال الأحد
+                            <span class="program-title" >
+                             سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
+                            </span>
+                        </td>
                     </tr>
-
                     @foreach($students as $student)
                     <tr>
                         <td>
                             <a href="{{route('admin.avatar.create',['student_id'=>$student->id])}}">
                                 <img src="{{url('/').$student->getFirstMediaUrl('avatars')}}"  style="border-radius: 50%; height: 50px;width: 50px;">
                             </a>
-
                         </td>
                         <td>
                             
@@ -179,12 +175,43 @@
                             <a class="edit-link"  
                              href="{{route('admin.student.edit',['user_id'=>$student->id])}}"> <span class="edit-link">تعديل </span> </a>
                         </td>
-                        <td>
-                            @if($student->level!=null){{$student->level->name}}@endif
-                            <a class="edit-link"  
-                             href="{{route('admin.student.shift.create',['student_id'=>$student->id])}}"> <span class="edit-link"> نقل </span> </a>
-                        </td>
                         
+                        <td>
+                            @if($student->isHasAnwar())
+                            مشترك
+                            @else
+                            <form action="{{route('admin.student.subscribe.store')}}" method="post">
+                                {{csrf_field()}}
+                                <input type="hidden" name="student_id" value="{{$student->id}}">
+                                <input type="hidden" name="program_tag" value="anwar">
+                                <button class="btn0" type="submit">اشترك الآن</button>
+                            </form>
+                            @endif
+                        </td>
+                        <td>
+                            @if($student->isHasFiqh())
+                            مشترك
+                            @else
+                            <form action="{{route('admin.student.subscribe.store')}}" method="post">
+                                {{csrf_field()}}
+                                <input type="hidden" name="student_id" value="{{$student->id}}">
+                                <input type="hidden" name="program_tag" value="fiqh">
+                                <button class="btn0" type="submit">اشترك الآن</button>
+                            </form>
+                            @endif
+                        </td>
+                        <td>
+                            @if($student->isHasSundayhero())
+                            مشترك
+                            @else
+                            <form action="{{route('admin.student.subscribe.store')}}" method="post">
+                                {{csrf_field()}}
+                                <input type="hidden" name="student_id" value="{{$student->id}}">
+                                <input type="hidden" name="program_tag" value="sundayhero">
+                                <button class="btn0" type="submit">اشترك الآن</button>
+                            </form>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </table>

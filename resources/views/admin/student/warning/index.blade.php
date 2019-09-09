@@ -39,7 +39,6 @@
                         </td>
                         <td>
                             {{$warning->note}}
-                            
                         </td>
                         <td>
                             {{$warning->comment}}
