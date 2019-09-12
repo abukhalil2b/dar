@@ -1,6 +1,12 @@
 .card{
 	margin-top:15px;
-	height: 255px;
+	height: 150px;
+}
+.card-body{
+	padding: 4px;
+}
+.card-footer{
+	padding: 4px;
 }
 .card-active{
 	border:1px solid #418c8c;

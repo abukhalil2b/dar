@@ -30,7 +30,17 @@
 
         <div class="row pt-3">
             <div class="col-lg-12">
-                <h4>الطلاب الذين حصلوا على نقاط في برنامج {{$Program->name}}</h4>
+                <h4>الطلاب الذين حصلوا على نقاط في برنامج 
+                            @if($program->program_tag == 'anwar')
+                                انوار القرآن
+                            @endif
+                            @if($program->program_tag == 'fiqh')
+                                المدرسة الفقهية
+                            @endif
+                            @if($program->program_tag == 'sundayhero')
+                                ابطال الأحد
+                            @endif
+                </h4>
                 <table class="table table-bordered">
                     <tr>
                         <td>اسم الطالب</td>

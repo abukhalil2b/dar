@@ -1,12 +1,14 @@
 <?php
 
-Route::get('student/report',function(){
-    $students = App\Student::whereDoesntHave('reports',function($query){
-        $query->where('reports.program_id',1);
-    })->get();
-    return $students;
-});
 
+/*  mission*/
+
+Route::get('mission/student/{student_id}/missionlist', 'MissionController@missionlist')->name('mission.missionlist');
+Route::get('mission/student/{student_id}/juzlist', 'MissionController@juzlist')->name('mission.juzlist');
+Route::get('mission/{id}/juzlist/save', 'MissionController@save')->name('mission.save');
+Route::get('mission/student/{student_id}/index', 'MissionController@index')->name('mission.index');
+Route::post('mission/store', 'MissionController@store')->name('mission.store');
+Route::get('mission/{mission_id}/delete', 'MissionController@delete')->name('mission.delete');
 
 //Auth::routes();
 /*auth*/
@@ -101,6 +103,11 @@ Route::prefix('admin/student')->group(function(){
     ->name('admin.student.mark.other.programs');
     Route::post('/mark/other/programs/search', 'StudentController@markOtherProgramsSearch')
     ->name('admin.student.mark.search.in.other.programs');
+
+    Route::get('{student_id}/report/index', 'StudentController@reportIndex')
+    ->name('admin.student.report.index');
+    Route::get('report/day', 'StudentController@reportDay')
+    ->name('admin.student.report.day');
 });
 
 /*admin student reports*/
@@ -170,25 +177,17 @@ Route::prefix('teacher')->group(function(){
     Route::get('/studentlist', 'TeacherController@studentList')
     ->name('teacher.studentlist');
     
-    Route::get('anwar/present/{student_id}/{present_id}/create', 'TeacherController@anwarPresentCreate')
-    ->name('teacher.anwar.present.create');
+    Route::get('present/{present_id}/delete', 'TeacherController@presentDelete')
+    ->name('teacher.present.delete');
 
-    Route::post('anwar/present/store', 'TeacherController@anwarPresentStore')
-    ->name('teacher.anwar.present.store');
+    Route::get('present/{student_id}/{present_id}/create', 'TeacherController@presentCreate')
+    ->name('teacher.present.create');
 
-    Route::post('/writedownnotes/store/other', 'TeacherController@writeDownNoteStoreOther')
-    ->name('teacher.writedownnotes.store.other');
+    Route::post('present/store', 'TeacherController@presentStore')
+    ->name('teacher.present.store');
 
-    Route::post('/writedownnotes/update', 'TeacherController@writeDownNoteUpdate')
-    ->name('teacher.writedownnotes.update');
 
-    Route::get('/report/student/{student_id}/create', 'TeacherController@reportStudentCreate')
-    ->name('student.report.create');
 
-    Route::post('/report/store', 'TeacherController@reportStudentStore')
-    ->name('student.report.store');
-    Route::post('/report/update', 'TeacherController@reportStudentUpdate')
-    ->name('student.report.update');
 
     Route::get('/warning/student/{student_id}/create', 'TeacherController@warningStudentCreate')
     ->name('student.warning.create');
@@ -201,8 +200,9 @@ Route::prefix('teacher')->group(function(){
 
 
 Route::get('/',function(){
-    $program_tag = App\Program::orderBy('id','desc')->value('program_tag');
-    return view('welcome',compact('program_tag'));
+    // $program_tag = App\Program::orderBy('id','desc')->value('program_tag');
+    $lastRecord = App\Record::orderBy('id','desc')->first();
+    return view('welcome',compact('lastRecord'));
 })->name('welcome')->middleware('auth');
 
 Route::get('/home',function(){

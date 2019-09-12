@@ -37,13 +37,21 @@
                     </tr>
                     <form action="{{route('admin.student.mark.search.in.other.programs')}}" method="post">
                     @csrf
-                    @foreach($Programs as $Program)
+                    @foreach($programs as $program)
                     <tr>
                         <td>
-                            {{$Program->name}}
+                            @if($program->program_tag == 'anwar')
+                                انوار القرآن
+                            @endif
+                            @if($program->program_tag == 'fiqh')
+                                المدرسة الفقهية
+                            @endif
+                            @if($program->program_tag == 'sundayhero')
+                                ابطال الأحد
+                            @endif
                         </td>
                          <td>
-                            <input type="checkbox" name="programs[]" value="{{$Program->id}}">
+                            <input type="checkbox" name="programs[]" value="{{$program->id}}">
                         </td>
                     
                     @endforeach

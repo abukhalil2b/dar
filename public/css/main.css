@@ -88,6 +88,12 @@ body{
 .btn-student-add{
   margin-top: 23px;
 }
+.btn-light-red {
+  border-color: #e11b40;
+  background-color: #fff0f2;
+  color: #495057;
+  width: 150px;
+}
 .btn-light-green {
   border-color: #418c8c;
   background-color: #f0fffc;
@@ -227,3 +233,23 @@ body{
   font-size: 11px;
 }
 
+.table-juz{
+  margin: 10px 0;
+  font-size: 14px;
+}
+.table-juz tr:first-child{
+  background-color: #418b8b;
+  color: #fff;
+}
+
+.btn-done{
+  border: 1px solid #418c8c;
+  border-radius: 4px;
+  background-color: #f0fffc;
+  color: #495057;
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #418c8c;
+  line-height: 1.8;
+}

@@ -14,7 +14,15 @@
                            <select name="" id="programid" class="form-control">
                                 <option value="">اختر برنامج معين...</option>}
                                 @foreach($programs as $program)
-                                    <option value="{{$program->id}}">{{$program->id}} - {{$program->name}}</option>
+                                    @if($program->program_tag == 'anwar')
+                                        <option value="{{$program->id}}">انوار القرآن</option>
+                                    @endif
+                                    @if($program->program_tag == 'fiqh')
+                                        <option value="{{$program->id}}">المدرسة الفقهية</option>
+                                    @endif
+                                    @if($program->program_tag == 'sundayhero')
+                                        <option value="{{$program->id}}">ابطال الأحد</option>
+                                    @endif
                                 @endforeach
                             </select>             
                         </td>

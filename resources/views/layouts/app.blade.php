@@ -44,11 +44,18 @@
                 @if($user = Auth::user())
                 <div style="display: block;">
                     <span >البرنامج:</span>
-                    @if(App\Program::orderBy('id','desc')->first()!=null)
-                    [{{App\Program::orderBy('id','desc')->first()->name}}]
-                    [{{App\Program::orderBy('id','desc')->first()->created_at}}]
+                    @if(App\Record::orderBy('id','desc')->first()!=null)
+                    [
+                        @if(App\Record::orderBy('id','desc')->first()->program_tag == 'anwar') انوار القرآن @endif
+                        @if(App\Record::orderBy('id','desc')->first()->program_tag == 'fiqh') المدرسة الفقهية @endif
+                        @if(App\Record::orderBy('id','desc')->first()->program_tag == 'sundayhero') ابطال الأحد @endif
+                    ]
+                    [
+                        {{App\Record::orderBy('id','desc')->first()->day}} / 
+                        {{App\Record::orderBy('id','desc')->first()->month}} / 
+                        {{App\Record::orderBy('id','desc')->first()->year}}
+                    ]
                     @endif
-                
                 </div>
                 
                 <div style="display: block;">

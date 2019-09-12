@@ -22,38 +22,6 @@ class HomeController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 $mediaItems[0]->size; // Returns the size in bytes
 $mediaItems[0]->human_readable_size; // Returns the size in a human readable format (eg. 1,5 MB)

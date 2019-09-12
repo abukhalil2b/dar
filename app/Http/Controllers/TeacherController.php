@@ -9,6 +9,7 @@ use App\Program;
 use App\User;
 use App\Sora;
 use App\Warning;
+use App\Record;
 use DB;
 class TeacherController extends Controller
 {
@@ -20,6 +21,7 @@ class TeacherController extends Controller
 
     public function studentList()
     {	
+        $lastRecord = Record::orderBy('id','decsc')->first();
         $students = DB::table('student_program')->leftjoin('students','student_program.student_id','students.id')
         ->select(
             DB::raw('
@@ -35,12 +37,20 @@ class TeacherController extends Controller
                     students.first_name,
                     students.last_name 
             '))
+        ->where('record_id',$lastRecord->id)
         ->get();
-        return view('teacher.student_list',compact('students'));
+        return view('teacher.student_list',compact('students','lastRecord'));
     }
 
-    public function anwarPresentCreate($student_id,$present_id)
+    public function presentDelete($present_id)
     {   
+        DB::table('student_program')->where('student_program.id',$present_id)->update(['present'=>0]);
+        return redirect()->route('teacher.studentlist')->with(['status'=>'تم']);
+    }
+
+    public function presentCreate($student_id,$present_id)
+    {   
+        $lastRecord = Record::orderBy('id','decsc')->first();
         $students = DB::table('student_program')->leftjoin('students','student_program.student_id','students.id')
         ->select(
             DB::raw('
@@ -61,10 +71,10 @@ class TeacherController extends Controller
         foreach($students as $student){
             $student;
         }
-        return view('teacher.student_present_create',compact('student'));
+        return view('teacher.student_present_create',compact('student','lastRecord'));
     }
 
-    public function anwarPresentStore(Request $request)
+    public function presentStore(Request $request)
     {   
     // return $request->all();
         $data = [
@@ -78,7 +88,7 @@ class TeacherController extends Controller
             'other_note'        =>$request->other_note
         ];
         DB::table('student_program')->where('id',$request->present_id)->update($data);
-        return redirect()->back()->with(['status'=>'تم']);
+        return redirect()->route('teacher.studentlist')->with(['status'=>'تم']);
     }
 
 
@@ -112,56 +122,6 @@ class TeacherController extends Controller
 
 
 
-    public function reportStudentCreate($student_id){
-        $lastProgram = Program::orderBy('id','desc')->first();
-        if($lastProgram!=null){
-            $student = Student::find($student_id);
-            $soras = Sora::all();
-            $msg = 'البيانات غير محفوظة';
-            $reports = DB::table('reports')->where('student_id',$student_id);
-
-            $lastReports = $reports->orderBy('id','desc')->get();
-
-            $todyReports = $reports->where('program_id',$lastProgram->id)->get();
-            
-            if(count($todyReports)>0){
-                $todyReport = $todyReports->first();
-                return view('teacher.report.edit',compact('todyReport','student','soras'));
-            }else{
-                $lastReport= $lastReports->first();
-                return view('teacher.report.create',
-                    compact('lastProgram','lastReport','student','msg','soras'));
-            }
-        }
-    }
-
-    public function reportStudentStore(Request $request){
-        $sora = Sora::find($request->sora_id);
-        
-        $data = [
-            'sora_id'   =>$request->sora_id,
-            'sora_name' =>$sora->name,
-            'juz_id' =>$sora->juz_id,
-            'aya_from'  =>$request->aya_from,
-            'aya_to'    =>$request->aya_to,
-            'user_id'   =>$request->user_id,
-            'student_id'=>$request->student_id,
-            'program_id'=>$request->program_id
-        ];
-
-        if (DB::table('reports')->insert($data)) {
-            return redirect()->back()->with(['status'=>'تم']);
-        }
-        return redirect()->back();
-    }
-
-    public function reportStudentUpdate(Request $request){
-        $data = ['sora_id'=>$request->sora_id,'aya_from'=>$request->aya_from,'aya_to'=>$request->aya_to];
-        if(DB::table('reports')->where('id',$request->report_id)->update($data)){
-            return redirect()->route('teacher.studentlist')->with(['status'=>'تم']);
-        }
-        return redirect()->back();
-    }
 
 
     public function warningStudentCreate($student_id){
@@ -171,8 +131,6 @@ class TeacherController extends Controller
         $program = Program::orderBy('id','desc')->first();
         $lastWarning = Warning::where('program_id',$program->id)->orderBy('id','desc')
         ->where('student_id',$student_id)->get();
-
-        
         if(count($lastWarning)>0){
             $todyWarning = $lastWarning->first();
             return view('teacher.warning.edit',compact('todyWarning','student'));
@@ -209,14 +167,6 @@ class TeacherController extends Controller
         }
         return redirect()->back();
     }
-
-
-
-
-
-
-
-
 
 
 

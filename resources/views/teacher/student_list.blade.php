@@ -7,9 +7,15 @@
             <div class="col-lg-12">
 
                 
-                <span class="body-title-lg">  عدد الطلاب  في برنامج انوار القرآن</span>
-                    <span class="badge badge-secondary">{{$students->count()}}</span>
+                <span class="body-title-lg">  عدد الطلاب  في برنامج 
+                    [@if($lastRecord) 
+                        @if($lastRecord->program_tag == 'anwar') انوار القرآن @endif
+                        @if($lastRecord->program_tag == 'fiqh') المدرسة الفقهية @endif
+                        @if($lastRecord->program_tag == 'sundayhero') ابطال الأحد @endif
+                    @else لايوجد برنامج مسجل  
+                    @endif] 
                 </span>
+                <span class="badge badge-secondary">{{$students->count()}}</span>
             </div>
         </div>
         <div class="row ">
@@ -35,10 +41,13 @@
                     @foreach($students as $student)
                      <tr>
                         <td>
-                        <a href="{{route('teacher.anwar.present.create',
+                        <a href="{{route('teacher.present.create',
                         ['student_id'=>$student->student_id,'present_id'=>$student->present_id])}}" class="btn-block">
                             {{$student->student_id}}-{{$student->first_name}} {{$student->last_name}}
                         </a>
+                        </td>
+                        <td>
+                            {{$student->present?'حاضر':'غائب'}}
                         </td>
                     </tr>   
                     @endforeach

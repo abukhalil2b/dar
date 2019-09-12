@@ -10,6 +10,7 @@ use App\Mark;
 use App\Level;
 use App\City;
 use App\Record;
+use App\Report;
 use DB;
 
 class StudentController extends Controller
@@ -19,7 +20,24 @@ class StudentController extends Controller
         //$this->middleware('auth');
     }
  
+    public function reportDay()
+    {
+        $lastRecord = Record::orderBy('id','desc')->where(['program_tag'=>'anwar'])->first();
+        $missions = DB::table('student_has_mission')
+        ->leftjoin('students','student_has_mission.student_id','students.id')
+        ->where(['day'=>$lastRecord->day,'done'=>1])
+        ->select('students.id as student_id','students.first_name','students.last_name','student_has_mission.day','student_has_mission.month','student_has_mission.mission_id'
+        ,'student_has_mission.mission_number','student_has_mission.done')
+        ->get();
+        return view('admin.student.report.day',compact('missions'));
+    }
 
+    public function reportIndex($student_id)
+    {
+        $student = Student::find($student_id);
+        $missions = DB::table('student_has_mission')->where(['student_id'=>$student_id,'done'=>1])->get();
+        return view('admin.student.report.index',compact('missions','student'));
+    }
     public function studentSubscribeStore(Request $request)
     {
         $student = Student::find($request->student_id);
@@ -62,7 +80,16 @@ class StudentController extends Controller
         ->orWhere('last_name', 'LIKE', '%' . $search . '%')
         ->orWhere('mobile', 'LIKE', '%' . $search . '%')
         ->paginate(100);
-        return view('admin.student.index',compact('students','levels','cities'));
+
+        $fiqhLastProgram = Program::orderBy('id','desc')->where('program_tag','fiqh')->first();
+        $sundayheroLastProgram = Program::orderBy('id','desc')->where('program_tag','sundayhero')->first();
+        $anwarLastProgram = Program::orderBy('id','desc')->where('program_tag','anwar')->first();
+
+        return view('admin.student.index',compact('students','levels','cities',
+            'fiqhLastProgram',
+            'sundayheroLastProgram',
+            'anwarLastProgram'
+        ));
     } 
 
     public function studentIndex()
@@ -195,37 +222,37 @@ class StudentController extends Controller
 
     public function markIndex()
     {
-        $Program = Program::orderBy('id','DESC')->first();
+        $program = Program::orderBy('id','DESC')->first();
         $marks = Mark::selectRaw('sum(marks.point) as total_point, marks.student_id, students.first_name as student_name, programs.program_tag as program_tag')
         ->join('students','students.id','=','marks.student_id')
         ->join('programs','programs.id','=','marks.program_id')
-        ->where('marks.program_id',$Program->id)
+        ->where('marks.program_id',$program->id)
         ->orderBy('total_point','DESC')
         ->groupBy('marks.student_id','marks.program_id','students.first_name','programs.program_tag')
         ->get();
         
-        return view('admin.student.mark.index',compact('marks','Program'));
+        return view('admin.student.mark.index',compact('marks','program'));
     }
 
 
 
     public function markOtherPrograms()
     {
-        $Programs = Program::orderBy('id','DESC')->get();
+        $programs = Program::orderBy('id','DESC')->get();
         
-        return view('admin.student.mark.other_programs',compact('Programs'));
+        return view('admin.student.mark.other_programs',compact('programs'));
     }
 
     public function markOtherProgramsSearch(Request $request)
     {
         if($request->programs!=null){
 
-            $marks = Mark::selectRaw('sum(marks.point) as total_point, marks.student_id, students.first_name as student_name, programs.name as program_name')
+            $marks = Mark::selectRaw('sum(marks.point) as total_point, marks.student_id, students.first_name as student_name, programs.program_tag as program_tag')
             ->join('students','students.id','=','marks.student_id')
             ->join('programs','programs.id','=','marks.program_id')
             ->whereIn('marks.program_id',$request->programs)
             ->orderBy('total_point','DESC')
-            ->groupBy('marks.student_id','marks.program_id','students.first_name','programs.name')
+            ->groupBy('marks.student_id','marks.program_id','students.first_name','programs.program_tag')
             ->get();
             
             return view('admin.student.mark.search_result_in_other_program',compact('marks'));

@@ -148,17 +148,17 @@
                         <td>اسم الطالب</td>
                         <td>انوار القرآن
                             <span class="program-title" >
-                             سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
+                             الإنطلاقة في سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
                             </span>
                         </td>
                         <td>المدرسة الفقهية
                             <span class="program-title" >
-                             سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
+                             الإنطلاقة في سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
                             </span>
                         </td>
                         <td>ابطال الأحد
                             <span class="program-title" >
-                             سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
+                             الإنطلاقة في سنة:{{$anwarLastProgram->year}} شهر{{$anwarLastProgram->month}}
                             </span>
                         </td>
                     </tr>

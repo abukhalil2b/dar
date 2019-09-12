@@ -28,7 +28,7 @@ class CreateStudentsTable extends Migration
 
             $table->integer('level_id')->unsigned()->nullable();
             $table->integer('city_id')->unsigned()->nullable();
-
+            $table->string('village')->nullable();
             $table->string('note')->nullable();
             $table->string('avatar')->nullable();
 

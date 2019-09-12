@@ -121,6 +121,10 @@ class Student extends Model implements HasMedia
         ->count();
     }  
 
- 
+    public function studentHasMission()
+    {
+        return $this->belongsToMany(Mission::class,'student_has_mission','student_id','mission_id');
+    }
+
 
 }

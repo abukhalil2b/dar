@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    .pull-left{
+        float: left;
+    }
+</style>
 <section class="body">
     <div class="container">
 
@@ -23,19 +28,22 @@
 
         <div class="row pt-3">
             <div class="col-lg-12">
-                <a  href="{{route('admin.record.create')}}" class="btn-mainmenu btn-sm btn btn-light-green" >افتح سجل جديد</a>
                 
                 <table class="table table-bordered">
                     <tr>
-                        <td>سجل البرامج</td>
+                        <td>سجل البرامج
+<a  href="{{route('admin.record.create')}}" class="pull-left btn btn-light-green" >افتح سجل جديد</a>
+                
+                        </td>
                     </tr>
                     @foreach($records as $record)
                     <tr>
                         <td>
-                            [{{$record->id}}]  {{$record->day}} - {{$record->month}} - {{$record->year}} - 
+                            تاريخ السجل [{{$record->day}}-{{$record->month}}-{{$record->year}}] - 
+                            اسم البرامج: [
                             @if($record->program_tag == 'anwar') انوار القرآن @endif
                             @if($record->program_tag == 'fiqh') المدرسة الفقهية @endif
-                            @if($record->program_tag == 'sundayhero') ابطال الأحد @endif
+                            @if($record->program_tag == 'sundayhero') ابطال الأحد @endif]
                            
                         </td>
                     </tr>

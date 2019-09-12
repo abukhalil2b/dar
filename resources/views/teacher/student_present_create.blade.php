@@ -29,7 +29,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <form action="{{route('teacher.anwar.present.store')}}" method="post">
+                <form action="{{route('teacher.present.store')}}" method="post">
                     @csrf
                     <table class="table table-bordered">
                         <tr>
@@ -43,6 +43,7 @@
                                 value="{{$student->present_time}}">
                             </td>
                         </tr>
+                        @if($lastRecord->program_tag=='anwar')
                         <tr>
                             <td> القلم القارئ </td>
                             <td>
@@ -80,13 +81,20 @@
                                  value="{{$student->other_note}}">    
                             </td>
                         </tr>
+                        @endif
                         <tr>
                             <td colspan="4">
                                 <input type="hidden" value="1" name="present">
                                 <input type="hidden" value="{{$student->present_id}}" name="present_id">
                                 <input type="hidden" value="{{Auth::user()->id}}" name="user_id">
-                                <button type="submit" class="btn btn-light-green"> حفظ   </button>
-                                <a  class="btn btn-light-green" href="{{route('teacher.studentlist')}}">الطلاب</a>
+                                @if(!$student->present)
+                                <button type="submit" class="btn btn-light-green"> تسجيل الحضور   </button>
+                                @else
+                                <button type="submit" class="btn btn-light-green"> تسجيل الحضور   </button>
+                                <a href="{{route('teacher.present.delete',['present_id'=>$student->present_id])}}" 
+                                    class="btn btn-light-red"> الغاء الحضور  </a>
+                                @endif
+                                
                             </td>
                         </tr>
                     </table>

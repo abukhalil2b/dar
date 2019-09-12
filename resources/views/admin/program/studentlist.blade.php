@@ -14,7 +14,6 @@
                 @endif] 
             </div>
         </div>
-
         <div class="row pt-3">
             <div class="col-lg-12">
                 <table class="table table-bordered">
@@ -24,10 +23,8 @@
                         <td> المستوى الذي فيه</td>
                         @endif
                     </tr>
-
                     @foreach($students as $student)
                     <tr>
-                       
                         <td>
                             {{$student->first_name}} {{$student->second_name}} {{$student->third_name}}
 	                        <a class="edit-link"  
@@ -38,7 +35,13 @@
                         <td>
                             @if($student->level!=null){{$student->level->name}}@endif
                             <a class="edit-link"  
-                             href="{{route('admin.student.shift.create',['student_id'=>$student->id])}}"> <span class="edit-link"> نقل </span> </a>
+                             href="{{route('admin.student.shift.create',['student_id'=>$student->id])}}"> <span class="edit-link"> نقل </span> 
+                            </a>
+                            <a class="edit-link"  
+                             href="{{route('admin.student.report.index',['student_id'=>$student->id])}}"> <span class="edit-link">
+                             المستوى العام للحفظ </span> 
+                            </a>
+                             
                         </td>
                         @endif
                     </tr>

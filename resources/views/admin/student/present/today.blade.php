@@ -21,6 +21,17 @@
                     <tr>
                         <td>
                             {{$student->id}} - {{$student->first_name}} {{$student->last_name}}
+                            @if($lastRecord->program_tag=='anwar')
+                            <a class="edit-link"  
+                             href="{{route('mission.index',['student_id'=>$student->id])}}"> 
+                             <span class="edit-link"> اختر مهمة </span> 
+                            </a>
+
+                            <a class="edit-link"  
+                             href="{{route('mission.missionlist',['student_id'=>$student->id])}}"> 
+                             <span class="edit-link"> انجز مهمة </span> 
+                            </a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
