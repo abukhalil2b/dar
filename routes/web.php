@@ -202,6 +202,7 @@ Route::prefix('teacher')->group(function(){
 Route::get('/',function(){
     // $program_tag = App\Program::orderBy('id','desc')->value('program_tag');
     $lastRecord = App\Record::orderBy('id','desc')->first();
+    if($lastRecord==null)$lastRecord=false;
     return view('welcome',compact('lastRecord'));
 })->name('welcome')->middleware('auth');
 

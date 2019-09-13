@@ -83,7 +83,7 @@
     </div>  
     </div>
 
-      @if(count($lastRecord)>0&&$lastRecord->program_tag=='sundayhero')
+      @if($lastRecord && $lastRecord->program_tag=='sundayhero')
       <h4>ابطال الأحد</h4>
       <div class="row">
       <div class="col-lg-3">
@@ -137,7 +137,7 @@
       </div>  
       @endif
 
-      @if(count($lastRecord)>0&&$lastRecord->program_tag=='fiqh')
+      @if($lastRecord && $lastRecord->program_tag=='fiqh')
       <h4>البرنامج الفقهي</h4>
       <div class="row">
       <div class="col-lg-3">
@@ -193,7 +193,7 @@
       </div> 
       @endif
 
-      @if(count($lastRecord)>0&&$lastRecord->program_tag=='anwar')
+      @if($lastRecord && $lastRecord->program_tag=='anwar')
       <h4>برنامج أنوار القرآن</h4>
       <div class="row">
       <div class="col-lg-3">
