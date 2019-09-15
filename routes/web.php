@@ -42,9 +42,6 @@ Route::prefix('program')->group(function(){
     Route::get('index', 'ProgramController@programIndex')
     ->name('program.index');
 
-    Route::get('create', 'ProgramController@programCreate')
-    ->name('program.create');
-
     Route::get('/{program_tag}/studentlist', 'ProgramController@programStudentlist')
     ->name('program.studentlist');
 
