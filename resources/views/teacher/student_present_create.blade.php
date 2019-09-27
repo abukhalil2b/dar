@@ -43,7 +43,6 @@
                                 value="{{$student->present_time}}">
                             </td>
                         </tr>
-                        @if($lastRecord->program_tag=='anwar')
                         <tr>
                             <td> القلم القارئ </td>
                             <td>
@@ -81,7 +80,6 @@
                                  value="{{$student->other_note}}">    
                             </td>
                         </tr>
-                        @endif
                         <tr>
                             <td colspan="4">
                                 <input type="hidden" value="1" name="present">
