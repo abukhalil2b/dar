@@ -208,7 +208,7 @@
                                 {{csrf_field()}}
                                 <input type="hidden" name="student_id" value="{{$student->id}}">
                                 <input type="hidden" name="program_tag" value="sundayhero">
-                                <button class="btn0" type="submit">اشترك الآن</button>
+                                <button  class="btn0" type="submit">اشترك الآن</button>
                             </form>
                             @endif
                         </td>
@@ -218,7 +218,6 @@
                 
             </div>
         </div>
-
     </div><!--/container-->
 
 @endsection
@@ -231,6 +230,8 @@
             $('#js-hidden-form').show(200)
             $('#js-btn-show-form').hide()
         })
+
+
    })
 </script>
 @endsection

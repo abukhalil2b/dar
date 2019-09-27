@@ -31,6 +31,7 @@ select,input{
   padding: 0 3px !important;
 }
 body{
+  font-size: 11px;
    font-family: "Helvetica Neue";
   text-align: right !important;
 }
@@ -67,9 +68,11 @@ body{
   border-radius: 4px;
   background-color: #f0fffc;
   color: #495057;
-  width: 150px;
-}
 
+}
+.btn0:hover{
+  outline: none;
+}
 /* btn */
 .btn-logout{
     background-color: transparent;
@@ -174,7 +177,7 @@ body{
 
 /* file: student index*/
 .edit-link{
-  margin-right: 10px;
+  display: block;
 }
 .program-title{
   color: brown;
