@@ -64,10 +64,13 @@ body{
 }
 /* subscribe btn*/
 .btn0 {
-  border: 1px solid #418c8c;
-  border-radius: 4px;
-  background-color: #f0fffc;
-  color: #495057;
+    border: 1px solid #418c8c;
+    border-radius: 4px;
+    background-color: #f0fffc;
+    color: #495057;
+    min-width: 33px;
+    display: block;
+    text-align: center;
 
 }
 .btn0:hover{
