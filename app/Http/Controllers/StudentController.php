@@ -59,6 +59,10 @@ class StudentController extends Controller
             $student->studentHasFiqh()->attach($program->id,['month'=>$program->month,'year'=>$program->year]);
         }
         
+        if($request->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
         return redirect()->route('admin.student.index');
     } 
 

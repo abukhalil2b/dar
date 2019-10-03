@@ -61,7 +61,7 @@ Route::prefix('program')->group(function(){
 /* admin  student */
 Route::prefix('admin/student')->group(function(){
      
-    Route::post('/subscribe', 'StudentController@studentSubscribeStore')
+    Route::any('/subscribe', 'StudentController@studentSubscribeStore')
     ->name('admin.student.subscribe.store');
 
     Route::post('/search', 'StudentController@studentSearch')

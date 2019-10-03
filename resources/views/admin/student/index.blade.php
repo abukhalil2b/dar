@@ -180,36 +180,21 @@
                             @if($student->isHasAnwar())
                             مشترك
                             @else
-                            <form action="{{route('admin.student.subscribe.store')}}" method="post">
-                                {{csrf_field()}}
-                                <input type="hidden" name="student_id" value="{{$student->id}}">
-                                <input type="hidden" name="program_tag" value="anwar">
-                                <button class="btn0" type="submit">اشترك الآن</button>
-                            </form>
+                               <a class="btn0 js-register-program" href='{{ route('admin.student.subscribe.store', ['student_id' => $student->id, 'program_tag' => 'anwar']) }}'>اشترك الآن</a>
                             @endif
                         </td>
                         <td>
                             @if($student->isHasFiqh())
                             مشترك
                             @else
-                            <form action="{{route('admin.student.subscribe.store')}}" method="post">
-                                {{csrf_field()}}
-                                <input type="hidden" name="student_id" value="{{$student->id}}">
-                                <input type="hidden" name="program_tag" value="fiqh">
-                                <button class="btn0" type="submit">اشترك الآن</button>
-                            </form>
+                                <a class="btn0 js-register-program" href='{{ route('admin.student.subscribe.store', ['student_id' => $student->id, 'program_tag' => 'fiqh']) }}'>اشترك الآن</a>
                             @endif
                         </td>
                         <td>
                             @if($student->isHasSundayhero())
                             مشترك
                             @else
-                            <form action="{{route('admin.student.subscribe.store')}}" method="post">
-                                {{csrf_field()}}
-                                <input type="hidden" name="student_id" value="{{$student->id}}">
-                                <input type="hidden" name="program_tag" value="sundayhero">
-                                <button  class="btn0" type="submit">اشترك الآن</button>
-                            </form>
+                                <a class="btn0 js-register-program" href='{{ route('admin.student.subscribe.store', ['student_id' => $student->id, 'program_tag' => 'sundayhero']) }}'>اشترك الآن</a>
                             @endif
                         </td>
                     </tr>
@@ -219,13 +204,35 @@
             </div>
         </div>
     </div><!--/container-->
-
+<script >
+ 
+ 
+</script>
 @endsection
 
 @section('javascript')
 <script>
    $(document).ready(function(){
-        
+    var CSRF_TOKEN = '{{ csrf_token() }}';
+    $('.js-register-program').on('click', function(event) {
+        event.preventDefault();
+        var clickedButton = $(this)
+        clickedButton.attr('disabled', true);
+        $.ajax({
+            type: 'GET',
+            url: clickedButton.attr('href'),
+            success: function(response) {
+                if(response.success) {
+                    clickedButton.replaceWith('<div>مشترك</div>')
+                }
+            }
+        })
+    });
+ btn = (e) => {
+    var input = e
+    console.log(input.next())
+ }
+
         $('#js-btn-show-form').on('click',function(){
             $('#js-hidden-form').show(200)
             $('#js-btn-show-form').hide()
